@@ -7,7 +7,7 @@ package proyecto.pkg01.bases.de.datos.avanzadas;
 
 /**
  *
- * @author ronal
+ * @author 
  */
 public class Proyecto01BasesDeDatosAvanzadas {
 

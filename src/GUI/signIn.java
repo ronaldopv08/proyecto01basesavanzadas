@@ -30,10 +30,10 @@ public class signIn extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         user = new javax.swing.JTextField();
-        password = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         comboBoxUserType = new javax.swing.JComboBox<>();
         logging = new javax.swing.JButton();
+        signInPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -41,13 +41,14 @@ public class signIn extends javax.swing.JFrame {
 
         jLabel2.setText("User");
 
-        user.setText("jTextField1");
-
-        password.setText("jTextField1");
-
         jLabel3.setText("User type");
 
         comboBoxUserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxUserType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxUserTypeActionPerformed(evt);
+            }
+        });
 
         logging.setText("Sign In");
         logging.addActionListener(new java.awt.event.ActionListener() {
@@ -69,8 +70,7 @@ public class signIn extends javax.swing.JFrame {
                         .addGap(164, 164, 164)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                                .addGap(0, 146, Short.MAX_VALUE)
                                 .addComponent(logging))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
@@ -83,7 +83,9 @@ public class signIn extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(user, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
+                    .addComponent(signInPassword))
                 .addGap(135, 135, 135))
         );
         layout.setVerticalGroup(
@@ -100,9 +102,9 @@ public class signIn extends javax.swing.JFrame {
                 .addGap(43, 43, 43)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(logging))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(logging)
+                    .addComponent(signInPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(62, 62, 62))
         );
 
@@ -112,6 +114,10 @@ public class signIn extends javax.swing.JFrame {
     private void loggingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loggingActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_loggingActionPerformed
+
+    private void comboBoxUserTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxUserTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxUserTypeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,7 +160,7 @@ public class signIn extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton logging;
-    private javax.swing.JTextField password;
+    private javax.swing.JPasswordField signInPassword;
     private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables
 }
