@@ -5,6 +5,11 @@
  */
 package GUI;
 
+import GUI.Administrators.AdministratorModule;
+import GUI.Employees.EmployeeModule;
+import GUI.Managers.ManagerModule;
+
+
 /**
  *
  * @author Andrés Pérez Bonilla
@@ -112,7 +117,44 @@ public class signIn extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loggingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loggingActionPerformed
-        // TODO add your handling code here:
+        String typedUserName = user.getText();
+        String verifyUserName; // HACER CONSULTA
+        String typedPassword = signInPassword.getText();
+        String verifyPassword; //Falta hacer consulta en sql que compruebe que esa contraseña sea para ese usuario
+        boolean consultedUserName = true;  
+        boolean consultedPassword = false;  
+        
+        if (typedUserName == null  ||  verifyUserName == null) { 
+            consultedUserName = false;
+        }
+         
+        if (typedPassword != null  &&  verifyPassword == null) { 
+            consultedPassword = false;
+        }
+        
+        String typeOfUser; //Consulta que saque eso
+        
+        if ((consultedUserName == true) && (consultedPassword == true)) { 
+ 
+            if (typeOfUser == "Administrador") {
+            
+                AdministratorModule administratorAccess = new AdministratorModule();
+                administratorAccess.setVisible(true);
+                this.dispose();
+                }
+            
+            if (typeOfUser == "Gerente") {        
+                ManagerModule managerAccess = new ManagerModule();
+                managerAccess.setVisible(true);
+                this.dispose();
+                }
+        
+            if (typeOfUser == "Vendedor") {
+                EmployeeModule employeeAccess = new EmployeeModule();
+                employeeAccess.setVisible(true);
+                this.dispose();
+                }
+        }         // TODO add your handling code here:
     }//GEN-LAST:event_loggingActionPerformed
 
     private void comboBoxUserTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxUserTypeActionPerformed

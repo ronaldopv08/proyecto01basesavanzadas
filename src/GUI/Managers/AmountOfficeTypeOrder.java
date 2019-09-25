@@ -30,9 +30,7 @@ public class AmountOfficeTypeOrder extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        amountTypeDate01 = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
-        amountTypeDate02 = new com.toedter.calendar.JDateChooser();
         amountTypeConsult = new javax.swing.JButton();
         amountTypeBack = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -73,17 +71,14 @@ public class AmountOfficeTypeOrder extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addComponent(jLabel4))
                 .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(amountTypeDate01, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                    .addComponent(amountTypeDate02, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(amountTypeOrder, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(amountTypeOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(amountTypeConsult)
                     .addComponent(amountTypeBack))
                 .addGap(43, 43, 43))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(147, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(117, 117, 117))
         );
@@ -95,13 +90,9 @@ public class AmountOfficeTypeOrder extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel1)
                         .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(amountTypeDate01, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(amountTypeDate02, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)))
+                        .addComponent(jLabel2)
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel3))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addComponent(amountTypeBack)
@@ -211,8 +202,6 @@ public class AmountOfficeTypeOrder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton amountTypeBack;
     private javax.swing.JButton amountTypeConsult;
-    private com.toedter.calendar.JDateChooser amountTypeDate01;
-    private com.toedter.calendar.JDateChooser amountTypeDate02;
     private javax.swing.JComboBox<String> amountTypeOrder;
     private javax.swing.JTable amountTypeTable;
     private javax.swing.JLabel jLabel1;

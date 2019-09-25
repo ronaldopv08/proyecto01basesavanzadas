@@ -36,7 +36,6 @@ public class ConsultOrder extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         consultOrderIDClient = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        consultOrderCalendar = new com.toedter.calendar.JDateChooser();
         consultOrderButton = new javax.swing.JButton();
         consultOrderBack = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -164,9 +163,8 @@ public class ConsultOrder extends javax.swing.JFrame {
                                                     .addComponent(jLabel3)))
                                             .addGap(18, 18, 18)
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(consultOrderNumber)
-                                                .addComponent(consultOrderIDClient)
-                                                .addComponent(consultOrderCalendar, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))))
+                                                .addComponent(consultOrderNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                                                .addComponent(consultOrderIDClient))))
                                     .addComponent(jLabel13))
                                 .addGap(164, 164, 164)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,9 +234,7 @@ public class ConsultOrder extends javax.swing.JFrame {
                             .addComponent(consultOrderIDClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(consultOrderCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -329,7 +325,6 @@ public class ConsultOrder extends javax.swing.JFrame {
     private javax.swing.JLabel consultNumber;
     private javax.swing.JButton consultOrderBack;
     private javax.swing.JButton consultOrderButton;
-    private com.toedter.calendar.JDateChooser consultOrderCalendar;
     private javax.swing.JTextField consultOrderIDClient;
     private javax.swing.JTextField consultOrderNumber;
     private javax.swing.JLabel consultPlace;
