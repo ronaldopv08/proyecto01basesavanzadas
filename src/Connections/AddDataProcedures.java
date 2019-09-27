@@ -1,14 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Connections;
 
+package Connections;
+import Connections.AddDataProcedures;
+import  java.sql.CallableStatement;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 /**
  *
  * @author Andrés Pérez Bonilla
  */
 public class AddDataProcedures {
+    public static void registerOrder(String a) throws SQLException, ClassNotFoundException {
+        CallableStatement entrada = Conexion.getConexion().prepareCall("{call ingresarVehiculoEstilo(?)}");
+        entrada.setString(1, a);
+        entrada.execute();      
+    }
     
 }

@@ -119,7 +119,7 @@ public class signIn extends javax.swing.JFrame {
     private void loggingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loggingActionPerformed
         String typedUserName = user.getText();
         String verifyUserName; // HACER CONSULTA
-        String typedPassword = signInPassword.getText();
+        String typedPassword = signInPassword.getSelectedText();
         String verifyPassword; //Falta hacer consulta en sql que compruebe que esa contraseña sea para ese usuario
         boolean consultedUserName = true;  
         boolean consultedPassword = false;  

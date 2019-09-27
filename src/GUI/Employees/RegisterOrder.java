@@ -100,7 +100,7 @@ public class RegisterOrder extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(registerOrderMedicines);
 
-        jLabel6.setText("Place:");
+        jLabel6.setText("Sucursal");
 
         registerOrderPlace.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -168,7 +168,7 @@ public class RegisterOrder extends javax.swing.JFrame {
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)))
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
