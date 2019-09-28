@@ -8,6 +8,9 @@ package GUI;
 import GUI.Administrators.AdministratorModule;
 import GUI.Employees.EmployeeModule;
 import GUI.Managers.ManagerModule;
+import GUI.signIn;
+import Connections.ConnectionSQL;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -48,7 +51,7 @@ public class signIn extends javax.swing.JFrame {
 
         jLabel3.setText("User type");
 
-        comboBoxUserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxUserType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Client", "Administrator", "Manager", "Employee" }));
         comboBoxUserType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboBoxUserTypeActionPerformed(evt);
@@ -118,11 +121,17 @@ public class signIn extends javax.swing.JFrame {
 
     private void loggingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loggingActionPerformed
         String typedUserName = user.getText();
-        String verifyUserName; // HACER CONSULTA
         char[] typedPassword = signInPassword.getPassword();
-        String verifyPassword; //Falta hacer consulta en sql que compruebe que esa contraseña sea para ese usuario
-        boolean consultedUserName = true;  
-        boolean consultedPassword = false;  
+        String  typedPasswordS = new String(typedPassword);
+       
+        
+        if (comboBoxUserType.getSelectedIndex() == 1)
+        idTypeUser = comboBoxUserType.getSelectedIndex();
+        
+        if(typedUserName == null ||  typedPassword == null){
+            JOptionPane.showMessageDialog(this, "Digit data in the text", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         
         if (typedUserName == null  ||  verifyUserName == null) { 
             consultedUserName = false;
@@ -158,7 +167,7 @@ public class signIn extends javax.swing.JFrame {
     }//GEN-LAST:event_loggingActionPerformed
 
     private void comboBoxUserTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxUserTypeActionPerformed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_comboBoxUserTypeActionPerformed
 
     /**

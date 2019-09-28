@@ -18,9 +18,8 @@ public class ConnectionSQL {
     
 
     public static Connection getConnectionSQL() throws SQLException, ClassNotFoundException {
-        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        //HAY QUE CONECTARLO A NUESTRA BD    
-        //Conexion.CON = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=xxxxxx;user=sa;password=BDBoys");
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+        ConnectionSQL.CON = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=basesAvanzadasCentral;user=sa;password=Abcd1234");
         return CON;
     }
     
