@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto.pkg01.bases.de.datos.avanzadas3;
+package proyecto.pkg01.bases.de.datos.avanzadas;
 
 /**
  *
- * @author Andrés Pérez Bonilla
+ * @author 
  */
-public class Proyecto01BasesDeDatosAvanzadas3 {
+public class Proyecto01BasesDeDatosAvanzadas {
 
     /**
      * @param args the command line arguments
