@@ -10,6 +10,12 @@ import GUI.Employees.EmployeeModule;
 import GUI.Managers.ManagerModule;
 import GUI.signIn;
 import Connections.ConnectionSQL;
+import Connections.AddDataProcedures;
+import GUI.Clients.clientModule;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -18,6 +24,8 @@ import javax.swing.JOptionPane;
  * @author Andrés Pérez Bonilla
  */
 public class signIn extends javax.swing.JFrame {
+    private ResultSet resultFromQuery;
+    private int count;
 
     /**
      * Creates new form signIn
@@ -103,7 +111,7 @@ public class signIn extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(comboBoxUserType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,45 +133,169 @@ public class signIn extends javax.swing.JFrame {
         String  typedPasswordS = new String(typedPassword);
        
         
-        if (comboBoxUserType.getSelectedIndex() == 1)
-        idTypeUser = comboBoxUserType.getSelectedIndex();
-        
-        if(typedUserName == null ||  typedPassword == null){
-            JOptionPane.showMessageDialog(this, "Digit data in the text", "ERROR", JOptionPane.ERROR_MESSAGE);
-            return;
+        if ("Client".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){ 
+            count = 0;
+            if(typedUserName == null ||  typedPassword == null){
+            JOptionPane.showMessageDialog(this, "Complete all the fields please.", "Advice", JOptionPane.INFORMATION_MESSAGE);
+            user.setText("");
+            signInPassword.setText("");
+            } else{
+            try {
+                resultFromQuery = ConnectionSQL.createConsult("Select COUNT(usuario) "
+                 + "from contactoHeredia where usuario='"+typedUserName+"' and contraseña='"+typedPassword+
+                 "'UNION ALL Select COUNT(usuario) "+ "from contactoCartago where usuario='"+typedUserName+
+                 "' and contraseña='"+typedPassword+
+                 "'UNION ALL Select COUNT(usuario) "+ "from contactoSanJose where usuario='"+typedUserName+
+                 "' and contraseña='"+typedPassword+"'");
+                try{
+                    while(resultFromQuery.next()){
+                        count = resultFromQuery.getInt(1);
+                    }
+                } catch (SQLException e){
+                    JOptionPane.showMessageDialog(this, e, "Advice", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if (count >= 1){
+                    JOptionPane.showMessageDialog(this, "Successful logging!", "Advice", JOptionPane.INFORMATION_MESSAGE);
+                    clientModule clientAccess = new clientModule();
+                    clientAccess.setVisible(true);
+                    this.dispose();
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                }
+        }   catch (ClassNotFoundException ex) {
+                Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            
         }
         
-        if (typedUserName == null  ||  verifyUserName == null) { 
-            consultedUserName = false;
+        if ("Administrator".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){ 
+            count = 0;
+            if(typedUserName == null ||  typedPassword == null){
+            JOptionPane.showMessageDialog(this, "Complete all the fields please.", "Advice", JOptionPane.INFORMATION_MESSAGE);
+            user.setText("");
+            signInPassword.setText("");
+            } else{
+            try {
+                resultFromQuery = ConnectionSQL.createConsult("Select COUNT(usuario) "
+                 + "from empleadoHeredia JOIN roles ON empleadoHeredia.idRol = roles.idRoles"
+                 + " where usuario='"+typedUserName+"' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
+                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoCartago JOIN roles "
+                 + "ON empleadoCartago.idRol = roles.idRoles where usuario='"+typedUserName+
+                 "' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
+                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoSanJose JOIN roles ON empleadoSanJose.idRol "
+                 + "= roles.idRoles where usuario='"+typedUserName+
+                 "' and contraseña='"+typedPassword+"' and "
+                + "rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+"'");
+                try{
+                    while(resultFromQuery.next()){
+                        count = resultFromQuery.getInt(1);
+                    }
+                } catch (SQLException e){
+                    JOptionPane.showMessageDialog(this, e, "Advice", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if (count >= 1){
+                    JOptionPane.showMessageDialog(this, "Successful logging!", "Advice", JOptionPane.INFORMATION_MESSAGE);
+                    AdministratorModule administratorAccess = new AdministratorModule();
+                    administratorAccess.setVisible(true);
+                    this.dispose();
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                }
+        }   catch (ClassNotFoundException ex) {
+                Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+  
+        }
+        
+        if ("Manager".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){ 
+            count = 0;
+            if(typedUserName == null ||  typedPassword == null){
+            JOptionPane.showMessageDialog(this, "Complete all the fields please.", "Advice", JOptionPane.INFORMATION_MESSAGE);
+            user.setText("");
+            signInPassword.setText("");
+            } else{
+            try {
+                resultFromQuery = ConnectionSQL.createConsult("Select COUNT(usuario) "
+                 + "from empleadoHeredia JOIN roles ON empleadoHeredia.idRol = roles.idRoles"
+                 + " where usuario='"+typedUserName+"' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
+                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoCartago JOIN roles "
+                 + "ON empleadoCartago.idRol = roles.idRoles where usuario='"+typedUserName+
+                 "' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
+                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoSanJose JOIN roles ON empleadoSanJose.idRol "
+                 + "= roles.idRoles where usuario='"+typedUserName+
+                 "' and contraseña='"+typedPassword+"' and "
+                + "rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+"'");
+                try{
+                    while(resultFromQuery.next()){
+                        count = resultFromQuery.getInt(1);
+                    }
+                } catch (SQLException e){
+                    JOptionPane.showMessageDialog(this, e, "Advice", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if (count >= 1){
+                    JOptionPane.showMessageDialog(this, "Successful logging!", "Advice", JOptionPane.INFORMATION_MESSAGE);
+                    ManagerModule managerAccess = new ManagerModule();
+                    managerAccess.setVisible(true);
+                    this.dispose();
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                }
+        }   catch (ClassNotFoundException ex) {
+                Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+  
+        }
+        
+        if ("Employee".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){ 
+            count = 0;
+            if(typedUserName == null ||  typedPassword == null){
+            JOptionPane.showMessageDialog(this, "Complete all the fields please.", "Advice", JOptionPane.INFORMATION_MESSAGE);
+            user.setText("");
+            signInPassword.setText("");
+            } else{
+            try {
+                resultFromQuery = ConnectionSQL.createConsult("Select COUNT(usuario) "
+                 + "from empleadoHeredia JOIN roles ON empleadoHeredia.idRol = roles.idRoles"
+                 + " where usuario='"+typedUserName+"' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
+                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoCartago JOIN roles "
+                 + "ON empleadoCartago.idRol = roles.idRoles where usuario='"+typedUserName+
+                 "' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
+                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoSanJose JOIN roles ON empleadoSanJose.idRol "
+                 + "= roles.idRoles where usuario='"+typedUserName+
+                 "' and contraseña='"+typedPassword+"' and "
+                + "rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+"'");
+                try{
+                    while(resultFromQuery.next()){
+                        count = resultFromQuery.getInt(1);
+                    }
+                } catch (SQLException e){
+                    JOptionPane.showMessageDialog(this, e, "Advice", JOptionPane.INFORMATION_MESSAGE);
+                }
+                if (count >= 1){
+                    JOptionPane.showMessageDialog(this, "Successful logging!", "Advice", JOptionPane.INFORMATION_MESSAGE);
+                    ManagerModule managerAccess = new ManagerModule();
+                    managerAccess.setVisible(true);
+                    this.dispose();
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                }
+        }   catch (ClassNotFoundException ex) {
+                Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+  
         }
          
-        if (typedPassword != null  &&  verifyPassword == null) { 
-            consultedPassword = false;
-        }
         
-        String typeOfUser; //Consulta que saque eso
-        
-        if ((consultedUserName == true) && (consultedPassword == true)) { 
- 
-            if (typeOfUser == "Administrador") {
-            
-                AdministratorModule administratorAccess = new AdministratorModule();
-                administratorAccess.setVisible(true);
-                this.dispose();
-                }
-            
-            if (typeOfUser == "Gerente") {        
-                ManagerModule managerAccess = new ManagerModule();
-                managerAccess.setVisible(true);
-                this.dispose();
-                }
-        
-            if (typeOfUser == "Vendedor") {
-                EmployeeModule employeeAccess = new EmployeeModule();
-                employeeAccess.setVisible(true);
-                this.dispose();
-                }
-        }         // TODO add your handling code here:
+
+           // TODO add your handling code here:
     }//GEN-LAST:event_loggingActionPerformed
 
     private void comboBoxUserTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxUserTypeActionPerformed

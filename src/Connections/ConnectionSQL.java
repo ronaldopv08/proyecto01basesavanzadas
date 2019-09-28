@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class ConnectionSQL {
+public class ConnectionSQL extends javax.swing.JFrame{
     public static Connection CON = null;
     public static ResultSet RESULT = null;
     
