@@ -3,6 +3,7 @@ package Connections;
 import Connections.AddDataProcedures;
 import Connections.ConnectionSQL;
 import  java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +12,19 @@ import java.text.SimpleDateFormat;
  * @author Andrés Pérez Bonilla
  */
 public class AddDataProcedures {
+    
+    private static ResultSet resultFromQuery;
+    
+    public static ResultSet verifiedEmployee(String userEmployee, String passwordEmployee, String typeEmployee) throws SQLException, ClassNotFoundException {
+        resultFromQuery=ConnectionSQL.createConsult("exec verifyUserEmployee "+userEmployee+","+passwordEmployee+","+typeEmployee+";");
+        return resultFromQuery;
+    }
+    
+    public static ResultSet verifiedContact(String userEmployee, String passwordEmployee) throws SQLException, ClassNotFoundException {
+        resultFromQuery=ConnectionSQL.createConsult("exec verifyUserContact "+userEmployee+","+passwordEmployee+";");
+        return resultFromQuery;
+    }
+    
     public static void registerOrderSanJose(int orderType, int employeeID, int clientID) throws SQLException, ClassNotFoundException {
         CallableStatement entry = ConnectionSQL.getConnectionSQL().prepareCall("{call ingresarPedidoSanJose(?,?,?)}");
         entry.setInt(1, orderType);

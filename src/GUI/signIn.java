@@ -130,26 +130,24 @@ public class signIn extends javax.swing.JFrame {
     private void loggingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loggingActionPerformed
         String typedUserName = user.getText();
         char[] typedPassword = signInPassword.getPassword();
-        String  typedPasswordS = new String(typedPassword);
-       
+        String typedPasswordS = new String(typedPassword);
+        count = 0;
+        System.out.println(typedUserName);
+        System.out.println(typedPasswordS);
         
-        if ("Client".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){ 
-            count = 0;
-            if(typedUserName == null ||  typedPassword == null){
+        if(typedUserName.length() == 0 ||  typedPasswordS.length() == 0){
             JOptionPane.showMessageDialog(this, "Complete all the fields please.", "Advice", JOptionPane.INFORMATION_MESSAGE);
             user.setText("");
             signInPassword.setText("");
-            } else{
+            return;
+        }
+        
+        if ("Client".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){
             try {
-                resultFromQuery = ConnectionSQL.createConsult("Select COUNT(usuario) "
-                 + "from contactoHeredia where usuario='"+typedUserName+"' and contraseña='"+typedPassword+
-                 "'UNION ALL Select COUNT(usuario) "+ "from contactoCartago where usuario='"+typedUserName+
-                 "' and contraseña='"+typedPassword+
-                 "'UNION ALL Select COUNT(usuario) "+ "from contactoSanJose where usuario='"+typedUserName+
-                 "' and contraseña='"+typedPassword+"'");
+                resultFromQuery = Connections.AddDataProcedures.verifiedContact(typedUserName, typedPasswordS);
                 try{
                     while(resultFromQuery.next()){
-                        count = resultFromQuery.getInt(1);
+                        count += 1;
                     }
                 } catch (SQLException e){
                     JOptionPane.showMessageDialog(this, e, "Advice", JOptionPane.INFORMATION_MESSAGE);
@@ -161,36 +159,21 @@ public class signIn extends javax.swing.JFrame {
                     this.dispose();
                 }
                 else{
-                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Advice", JOptionPane.INFORMATION_MESSAGE);
                 }
         }   catch (ClassNotFoundException ex) {
                 Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-            
+            }   catch (SQLException ex) {
+                    Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
+                }          
         }
         
         if ("Administrator".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){ 
-            count = 0;
-            if(typedUserName == null ||  typedPassword == null){
-            JOptionPane.showMessageDialog(this, "Complete all the fields please.", "Advice", JOptionPane.INFORMATION_MESSAGE);
-            user.setText("");
-            signInPassword.setText("");
-            } else{
             try {
-                resultFromQuery = ConnectionSQL.createConsult("Select COUNT(usuario) "
-                 + "from empleadoHeredia JOIN roles ON empleadoHeredia.idRol = roles.idRoles"
-                 + " where usuario='"+typedUserName+"' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
-                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoCartago JOIN roles "
-                 + "ON empleadoCartago.idRol = roles.idRoles where usuario='"+typedUserName+
-                 "' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
-                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoSanJose JOIN roles ON empleadoSanJose.idRol "
-                 + "= roles.idRoles where usuario='"+typedUserName+
-                 "' and contraseña='"+typedPassword+"' and "
-                + "rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+"'");
+                resultFromQuery = Connections.AddDataProcedures.verifiedEmployee(typedUserName, typedPasswordS,"2");
                 try{
                     while(resultFromQuery.next()){
-                        count = resultFromQuery.getInt(1);
+                        count += 1;
                     }
                 } catch (SQLException e){
                     JOptionPane.showMessageDialog(this, e, "Advice", JOptionPane.INFORMATION_MESSAGE);
@@ -202,36 +185,21 @@ public class signIn extends javax.swing.JFrame {
                     this.dispose();
                 }
                 else{
-                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Advice", JOptionPane.INFORMATION_MESSAGE);
                 }
         }   catch (ClassNotFoundException ex) {
                 Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-  
+            } catch (SQLException ex) {
+                Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
+            }  
         }
         
         if ("Manager".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){ 
-            count = 0;
-            if(typedUserName == null ||  typedPassword == null){
-            JOptionPane.showMessageDialog(this, "Complete all the fields please.", "Advice", JOptionPane.INFORMATION_MESSAGE);
-            user.setText("");
-            signInPassword.setText("");
-            } else{
             try {
-                resultFromQuery = ConnectionSQL.createConsult("Select COUNT(usuario) "
-                 + "from empleadoHeredia JOIN roles ON empleadoHeredia.idRol = roles.idRoles"
-                 + " where usuario='"+typedUserName+"' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
-                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoCartago JOIN roles "
-                 + "ON empleadoCartago.idRol = roles.idRoles where usuario='"+typedUserName+
-                 "' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
-                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoSanJose JOIN roles ON empleadoSanJose.idRol "
-                 + "= roles.idRoles where usuario='"+typedUserName+
-                 "' and contraseña='"+typedPassword+"' and "
-                + "rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+"'");
+                resultFromQuery = Connections.AddDataProcedures.verifiedEmployee(typedUserName, typedPasswordS,"3");
                 try{
                     while(resultFromQuery.next()){
-                        count = resultFromQuery.getInt(1);
+                        count += 1;
                     }
                 } catch (SQLException e){
                     JOptionPane.showMessageDialog(this, e, "Advice", JOptionPane.INFORMATION_MESSAGE);
@@ -243,54 +211,39 @@ public class signIn extends javax.swing.JFrame {
                     this.dispose();
                 }
                 else{
-                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Advice", JOptionPane.INFORMATION_MESSAGE);
                 }
         }   catch (ClassNotFoundException ex) {
                 Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-  
         }
         
         if ("Employee".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){ 
-            count = 0;
-            if(typedUserName == null ||  typedPassword == null){
-            JOptionPane.showMessageDialog(this, "Complete all the fields please.", "Advice", JOptionPane.INFORMATION_MESSAGE);
-            user.setText("");
-            signInPassword.setText("");
-            } else{
             try {
-                resultFromQuery = ConnectionSQL.createConsult("Select COUNT(usuario) "
-                 + "from empleadoHeredia JOIN roles ON empleadoHeredia.idRol = roles.idRoles"
-                 + " where usuario='"+typedUserName+"' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
-                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoCartago JOIN roles "
-                 + "ON empleadoCartago.idRol = roles.idRoles where usuario='"+typedUserName+
-                 "' and contraseña='"+typedPassword+"' and rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+
-                 "'UNION ALL Select COUNT(usuario) "+ "from empleadoSanJose JOIN roles ON empleadoSanJose.idRol "
-                 + "= roles.idRoles where usuario='"+typedUserName+
-                 "' and contraseña='"+typedPassword+"' and "
-                + "rol.roles='"+comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex())+"'");
+                resultFromQuery = Connections.AddDataProcedures.verifiedEmployee(typedUserName, typedPasswordS,"1");
                 try{
                     while(resultFromQuery.next()){
-                        count = resultFromQuery.getInt(1);
+                        count += 1;
                     }
                 } catch (SQLException e){
                     JOptionPane.showMessageDialog(this, e, "Advice", JOptionPane.INFORMATION_MESSAGE);
                 }
                 if (count >= 1){
                     JOptionPane.showMessageDialog(this, "Successful logging!", "Advice", JOptionPane.INFORMATION_MESSAGE);
-                    ManagerModule managerAccess = new ManagerModule();
-                    managerAccess.setVisible(true);
+                    EmployeeModule employeeAccess = new EmployeeModule();
+                    employeeAccess.setVisible(true);
                     this.dispose();
                 }
                 else{
-                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "User or password not correctly typed!", "Advice", JOptionPane.INFORMATION_MESSAGE);
                 }
         }   catch (ClassNotFoundException ex) {
                 Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(signIn.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-  
         }
          
         
