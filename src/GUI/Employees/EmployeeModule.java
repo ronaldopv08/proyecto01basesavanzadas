@@ -32,9 +32,7 @@ public class EmployeeModule extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         employeeModuleRegisterOrder = new javax.swing.JButton();
-        employeeModuleModifyOrder = new javax.swing.JButton();
         employeeModuleRegisterClient = new javax.swing.JButton();
-        employeeModuleRegisterMedicine = new javax.swing.JButton();
         employeeModuleConsultOrder = new javax.swing.JButton();
         employeeModuleBack = new javax.swing.JButton();
 
@@ -50,24 +48,10 @@ public class EmployeeModule extends javax.swing.JFrame {
             }
         });
 
-        employeeModuleModifyOrder.setText("Modify Order");
-        employeeModuleModifyOrder.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                employeeModuleModifyOrderActionPerformed(evt);
-            }
-        });
-
         employeeModuleRegisterClient.setText("Register Client");
         employeeModuleRegisterClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 employeeModuleRegisterClientActionPerformed(evt);
-            }
-        });
-
-        employeeModuleRegisterMedicine.setText("Register Medicine");
-        employeeModuleRegisterMedicine.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                employeeModuleRegisterMedicineActionPerformed(evt);
             }
         });
 
@@ -90,27 +74,18 @@ public class EmployeeModule extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(130, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(employeeModuleRegisterOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(employeeModuleConsultOrder)
-                        .addComponent(employeeModuleModifyOrder))
+                        .addComponent(employeeModuleRegisterClient))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(140, 140, 140))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(employeeModuleRegisterClient))
-                            .addComponent(employeeModuleRegisterMedicine)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(158, 158, 158)
-                        .addComponent(employeeModuleBack)))
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addGap(159, 159, 159)
+                .addComponent(employeeModuleBack)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,17 +94,13 @@ public class EmployeeModule extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(employeeModuleRegisterOrder)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(employeeModuleModifyOrder)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(30, 30, 30)
                 .addComponent(employeeModuleConsultOrder)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(employeeModuleRegisterMedicine)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(employeeModuleRegisterClient)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(31, 31, 31)
                 .addComponent(employeeModuleBack)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,24 +157,6 @@ public class EmployeeModule extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_employeeModuleBackActionPerformed
 
-    private void employeeModuleModifyOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeModuleModifyOrderActionPerformed
-        // TODO add your handling code here:
-        ModifyOrder modifyOrder = new ModifyOrder();
-        modifyOrder.setVisible(true);
-        modifyOrder.setLocationRelativeTo(null);
-        modifyOrder.setDefaultCloseOperation(ModifyOrder.HIDE_ON_CLOSE);
-        this.dispose();
-    }//GEN-LAST:event_employeeModuleModifyOrderActionPerformed
-
-    private void employeeModuleRegisterMedicineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeModuleRegisterMedicineActionPerformed
-        // TODO add your handling code here:
-        RegisterMedicine registerMedicine = new RegisterMedicine();
-        registerMedicine.setVisible(true);
-        registerMedicine.setLocationRelativeTo(null);
-        registerMedicine.setDefaultCloseOperation(RegisterMedicine.HIDE_ON_CLOSE);
-        this.dispose();
-    }//GEN-LAST:event_employeeModuleRegisterMedicineActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -243,9 +196,7 @@ public class EmployeeModule extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton employeeModuleBack;
     private javax.swing.JButton employeeModuleConsultOrder;
-    private javax.swing.JButton employeeModuleModifyOrder;
     private javax.swing.JButton employeeModuleRegisterClient;
-    private javax.swing.JButton employeeModuleRegisterMedicine;
     private javax.swing.JButton employeeModuleRegisterOrder;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
