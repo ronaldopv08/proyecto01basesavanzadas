@@ -60,21 +60,17 @@ public class AmountOffice extends javax.swing.JFrame {
             }
         });
 
-        initialYear.setText("jTextField1");
+        initialYear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                initialYearActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Year");
 
         jLabel5.setText("Month");
 
         jLabel6.setText("Day");
-
-        initialMonth.setText("jTextField2");
-
-        finalYear.setText("jTextField3");
-
-        finalMonth.setText("jTextField4");
-
-        initialDay.setText("jTextField5");
 
         finalDay.setText("jTextField6");
 
@@ -208,6 +204,10 @@ public class AmountOffice extends javax.swing.JFrame {
         managerModule.setDefaultCloseOperation(ManagerModule.HIDE_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_amountOfficeBackActionPerformed
+
+    private void initialYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initialYearActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_initialYearActionPerformed
 
     /**
      * @param args the command line arguments
