@@ -27,6 +27,7 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
      */
     private ResultSet resultFromQuery;
     private int count;
+
     public NumberOrdersCustomer() {
         initComponents();
     }
@@ -37,139 +38,145 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
 
         try {
             resultFromQuery = AddDataProcedures.consultAdministratorQuantityOrdersHerediaDrugStore(initialDate, finalDate);
-            Vector dataOfficeAmountHeredia = new Vector();
+            
             while (resultFromQuery.next()) {
+                Vector dataOfficeAmountHeredia = new Vector();
                 dataOfficeAmountHeredia.add(resultFromQuery.getInt(1));
                 dataOfficeAmountHeredia.add(resultFromQuery.getString(2));
                 dataOfficeAmountHeredia.add(resultFromQuery.getInt(3));
+                amountsHeredia.addRow(dataOfficeAmountHeredia);
+                customersTable.setModel(amountsHeredia);
             }
-            amountsHeredia.addRow(dataOfficeAmountHeredia);
-            customersTable.setModel(amountsHeredia);
+            
         } catch (SQLException e) {
         }
     }
-    
-    
+
     public void getOrdersHeredia(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
         DefaultTableModel amountsHeredia = (DefaultTableModel) ordersTable.getModel();
         amountsHeredia.setRowCount(0);
 
         try {
-resultFromQuery = ConnectionSQL.createConsult("select pedidoHeredia.idPedido, "
-+ "contactoHeredia.nombre, contactoHeredia.idContacto, "
-+ "pedidoHeredia.fecha, SUM(precio*cantidad) as amount  "
-+ "from medicamento join medicamentoPedidoHeredia "
-+ "on medicamento.idMedicamento=medicamentoPedidoHeredia.idMedicamento "
-+ "join pedidoHeredia  on medicamentoPedidoHeredia.idPedido = pedidoHeredia.idPedido "
-+ "join contactoHeredia on pedidoHeredia.idContacto = contactoHeredia.idContacto "
-+ "where pedidoHeredia.estadoPedido = 2 "
-+ "and pedidoHeredia.fecha between '"+initialDate+"' and '"+finalDate+"' group "
-+ "by pedidoHeredia.idPedido,contactoHeredia.nombre,contactoHeredia.idContacto, pedidoHeredia.fecha;");
-            Vector dataOfficeAmountHeredia = new Vector();
+            resultFromQuery = ConnectionSQL.createConsult("select pedidoHeredia.idPedido, "
+                    + "contactoHeredia.nombre, contactoHeredia.idContacto, "
+                    + "pedidoHeredia.fecha, SUM(precio*cantidad) as amount  "
+                    + "from medicamento join medicamentoPedidoHeredia "
+                    + "on medicamento.idMedicamento=medicamentoPedidoHeredia.idMedicamento "
+                    + "join pedidoHeredia  on medicamentoPedidoHeredia.idPedido = pedidoHeredia.idPedido "
+                    + "join contactoHeredia on pedidoHeredia.idContacto = contactoHeredia.idContacto "
+                    + "where pedidoHeredia.fecha between '" + initialDate + "' and '" + finalDate + "' group "
+                    + "by pedidoHeredia.idPedido,contactoHeredia.nombre,contactoHeredia.idContacto, pedidoHeredia.fecha;");
+            
             while (resultFromQuery.next()) {
+                Vector dataOfficeAmountHeredia = new Vector();
                 dataOfficeAmountHeredia.add(resultFromQuery.getInt(1));
                 dataOfficeAmountHeredia.add(resultFromQuery.getString(2));
                 dataOfficeAmountHeredia.add(resultFromQuery.getInt(3));
-                dataOfficeAmountHeredia.add(resultFromQuery.getString(3));
+                dataOfficeAmountHeredia.add(resultFromQuery.getString(4));
+                dataOfficeAmountHeredia.add(resultFromQuery.getFloat(5));
+                amountsHeredia.addRow(dataOfficeAmountHeredia);
+                ordersTable.setModel(amountsHeredia);
             }
-            amountsHeredia.addRow(dataOfficeAmountHeredia);
-            ordersTable.setModel(amountsHeredia);
+            
         } catch (SQLException e) {
         }
     }
-    
+
     public void getClientsCartago(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
         DefaultTableModel amountsCartago = (DefaultTableModel) customersTable.getModel();
         amountsCartago.setRowCount(0);
 
         try {
             resultFromQuery = AddDataProcedures.consultAdministratorQuantityOrdersCartagoDrugStore(initialDate, finalDate);
-            Vector dataOfficeAmountCartago = new Vector();
+            
             while (resultFromQuery.next()) {
+                Vector dataOfficeAmountCartago = new Vector();
                 dataOfficeAmountCartago.add(resultFromQuery.getInt(1));
                 dataOfficeAmountCartago.add(resultFromQuery.getString(2));
                 dataOfficeAmountCartago.add(resultFromQuery.getInt(3));
+                amountsCartago.addRow(dataOfficeAmountCartago);
+                customersTable.setModel(amountsCartago);
             }
-            amountsCartago.addRow(dataOfficeAmountCartago);
-            customersTable.setModel(amountsCartago);
+            
         } catch (SQLException e) {
         }
     }
-    
+
     public void getOrdersCartago(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
         DefaultTableModel amountsCartago = (DefaultTableModel) ordersTable.getModel();
         amountsCartago.setRowCount(0);
 
         try {
-resultFromQuery = ConnectionSQL.createConsult("select pedidoCartago.idPedido, "
-+ "contactoCartago.nombre, contactoCartago.idContacto, "
-+ "pedidoCartago.fecha, SUM(precio*cantidad) as amount  "
-+ "from medicamento join medicamentoPedidoCartago "
-+ "on medicamento.idMedicamento=medicamentoPedidoCartago.idMedicamento "
-+ "join pedidoCartago  on medicamentoPedidoCartago.idPedido = pedidoCartago.idPedido "
-+ "join contactoCartago on pedidoCartago.idContacto = contactoCartago.idContacto "
-+ "where pedidoCartago.estadoPedido = 2 "
-+ "and pedidoCartago.fecha between '"+initialDate+"' and '"+finalDate+"' group "
-+ "by pedidoCartago.idPedido,contactoCartago.nombre,contactoCartago.idContacto, pedidoCartago.fecha;");    
-            Vector dataOfficeAmountCartago = new Vector();
+            resultFromQuery = ConnectionSQL.createConsult("select pedidoCartago.idPedido, "
+                    + "contactoCartago.nombre, contactoCartago.idContacto, "
+                    + "pedidoCartago.fecha, SUM(precio*cantidad)"
+                    + "from medicamento join medicamentoPedidoCartago "
+                    + "on medicamento.idMedicamento=medicamentoPedidoCartago.idMedicamento "
+                    + "join pedidoCartago  on medicamentoPedidoCartago.idPedido = pedidoCartago.idPedido "
+                    + "join contactoCartago on pedidoCartago.idContacto = contactoCartago.idContacto "
+                    + "where pedidoCartago.fecha between '" + initialDate + "' and '" + finalDate + "' group "
+                    + "by pedidoCartago.idPedido,contactoCartago.nombre,contactoCartago.idContacto, pedidoCartago.fecha;");
+            
             while (resultFromQuery.next()) {
+                Vector dataOfficeAmountCartago = new Vector();
                 dataOfficeAmountCartago.add(resultFromQuery.getInt(1));
                 dataOfficeAmountCartago.add(resultFromQuery.getString(2));
                 dataOfficeAmountCartago.add(resultFromQuery.getInt(3));
-                dataOfficeAmountCartago.add(resultFromQuery.getString(3));
+                dataOfficeAmountCartago.add(resultFromQuery.getString(4));
+                dataOfficeAmountCartago.add(resultFromQuery.getFloat(5));
+                amountsCartago.addRow(dataOfficeAmountCartago);
+                ordersTable.setModel(amountsCartago);
             }
-            amountsCartago.addRow(dataOfficeAmountCartago);
-            ordersTable.setModel(amountsCartago);
+            
         } catch (SQLException e) {
         }
     }
-    
+
     public void getClientsSanJose(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
         DefaultTableModel amountsSanJose = (DefaultTableModel) customersTable.getModel();
         amountsSanJose.setRowCount(0);
 
         try {
             resultFromQuery = AddDataProcedures.consultAdministratorQuantityOrdersSanJoseDrugStore(initialDate, finalDate);
-            Vector dataOfficeAmountSanJose = new Vector();
             while (resultFromQuery.next()) {
+                Vector dataOfficeAmountSanJose = new Vector();
                 dataOfficeAmountSanJose.add(resultFromQuery.getInt(1));
                 dataOfficeAmountSanJose.add(resultFromQuery.getString(2));
                 dataOfficeAmountSanJose.add(resultFromQuery.getInt(3));
+                amountsSanJose.addRow(dataOfficeAmountSanJose);
+                customersTable.setModel(amountsSanJose);
             }
-            amountsSanJose.addRow(dataOfficeAmountSanJose);
-            customersTable.setModel(amountsSanJose);
         } catch (SQLException e) {
         }
     }
-    
+
     public void getOrdersSanJose(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
         DefaultTableModel amountsSanJose = (DefaultTableModel) ordersTable.getModel();
         amountsSanJose.setRowCount(0);
 
         try {
-            
-              
-resultFromQuery = ConnectionSQL.createConsult("select pedidoSanJose.idPedido, "
-+ "contactoSanJose.nombre, contactoSanJose.idContacto, "
-+ "pedidoSanJose.fecha, SUM(precio*cantidad) as amount  "
-+ "from medicamento join medicamentoPedidoSanJose "
-+ "on medicamento.idMedicamento=medicamentoPedidoSanJose.idMedicamento "
-+ "join pedidoSanJose  on medicamentoPedidoSanJose.idPedido = pedidoSanJose.idPedido "
-+ "join contactoSanJose on pedidoSanJose.idContacto = contactoSanJose.idContacto "
-+ "where pedidoSanJose.estadoPedido = 2 "
-+ "and pedidoSanJose.fecha between '"+initialDate+"' and '"+finalDate+"' group "
-+ "by pedidoSanJose.idPedido,contactoSanJose.nombre,contactoSanJose.idContacto, pedidoSanJose.fecha;");
-            
-            
-            Vector dataOfficeAmountSanJose = new Vector();
+
+            resultFromQuery = ConnectionSQL.createConsult("select pedidoSanJose.idPedido, "
+                    + "contactoSanJose.nombre, contactoSanJose.idContacto, "
+                    + "pedidoSanJose.fecha, SUM(precio*cantidad) as amount  "
+                    + "from medicamento join medicamentoPedidoSanJose "
+                    + "on medicamento.idMedicamento=medicamentoPedidoSanJose.idMedicamento "
+                    + "join pedidoSanJose  on medicamentoPedidoSanJose.idPedido = pedidoSanJose.idPedido "
+                    + "join contactoSanJose on pedidoSanJose.idContacto = contactoSanJose.idContacto "
+                    + "where pedidoSanJose.fecha between '" + initialDate + "' and '" + finalDate + "' group "
+                    + "by pedidoSanJose.idPedido,contactoSanJose.nombre,contactoSanJose.idContacto, pedidoSanJose.fecha;");
+
             while (resultFromQuery.next()) {
+                Vector dataOfficeAmountSanJose = new Vector();
                 dataOfficeAmountSanJose.add(resultFromQuery.getInt(1));
                 dataOfficeAmountSanJose.add(resultFromQuery.getString(2));
                 dataOfficeAmountSanJose.add(resultFromQuery.getInt(3));
                 dataOfficeAmountSanJose.add(resultFromQuery.getString(4));
+                dataOfficeAmountSanJose.add(resultFromQuery.getFloat(5));
+                amountsSanJose.addRow(dataOfficeAmountSanJose);
+                ordersTable.setModel(amountsSanJose);
             }
-            amountsSanJose.addRow(dataOfficeAmountSanJose);
-            ordersTable.setModel(amountsSanJose);
+            
         } catch (SQLException e) {
         }
     }
@@ -323,24 +330,23 @@ resultFromQuery = ConnectionSQL.createConsult("select pedidoSanJose.idPedido, "
                                             .addComponent(finalMonth)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
-                                        .addComponent(initialMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                        .addComponent(initialMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addGap(18, 18, 18))
-                                            .addComponent(consult, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(back, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                        .addComponent(jLabel1)
+                                        .addGap(18, 18, 18))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(17, 17, 17)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel8)
                                             .addComponent(initialDay, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel8)
                                             .addComponent(finalDay, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE)))))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(consult)
+                                            .addComponent(back))
+                                        .addGap(10, 10, 10)))))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -348,36 +354,35 @@ resultFromQuery = ConnectionSQL.createConsult("select pedidoSanJose.idPedido, "
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(1, 1, 1)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(initialYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(initialMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(7, 7, 7))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(initialDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(back)
-                                .addGap(19, 19, 19))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(finalYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(finalMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(finalDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                        .addComponent(jLabel4))
-                    .addComponent(consult))
+                                    .addComponent(initialYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(initialMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2))
+                                .addGap(7, 7, 7))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(initialDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(consult)
+                        .addGap(12, 12, 12)))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(finalYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(finalMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(finalDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(back))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -419,34 +424,34 @@ resultFromQuery = ConnectionSQL.createConsult("select pedidoSanJose.idPedido, "
     private void consultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultActionPerformed
         if (initialYear.getText().isEmpty() || initialMonth.getText().isEmpty() || initialDay.getText().isEmpty()
                 || finalYear.getText().isEmpty() || finalMonth.getText().isEmpty() || finalDay.getText().isEmpty()) {
-
             JOptionPane.showMessageDialog(this, "Complete all the fields please");
+            return;
         }
         String initialDate = initialYear.getText() + "-" + initialMonth.getText() + "-" + initialDay.getText();
         String finalDate = finalYear.getText() + "-" + finalMonth.getText() + "-" + finalDay.getText();
-        if (LoginProvince.logInProvince == 1) {
+        if (LoginProvince.getLogInProvince() == 1) {
             try {
-                 getClientsSanJose(initialDate,finalDate);
-                 getOrdersSanJose(initialDate,finalDate);
-                 
+                getClientsSanJose(initialDate, finalDate);
+                getOrdersSanJose(initialDate, finalDate);
+
             } catch (SQLException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "Validate the data");
                 Logger.getLogger(NumberOrdersCustomer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (LoginProvince.logInProvince == 3) {
+        if (LoginProvince.getLogInProvince() == 3) {
             try {
-                getClientsCartago(initialDate,finalDate);
-                getOrdersCartago(initialDate,finalDate);
+                getClientsCartago(initialDate, finalDate);
+                getOrdersCartago(initialDate, finalDate);
             } catch (SQLException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "Validate the data");
                 Logger.getLogger(NumberOrdersCustomer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (LoginProvince.logInProvince == 4) {
+        if (LoginProvince.getLogInProvince() == 4) {
             try {
-                getClientsHeredia(initialDate,finalDate);
-                getOrdersHeredia(initialDate,finalDate);
+                getClientsHeredia(initialDate, finalDate);
+                getOrdersHeredia(initialDate, finalDate);
             } catch (SQLException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "Validate the data");
                 Logger.getLogger(NumberOrdersCustomer.class.getName()).log(Level.SEVERE, null, ex);
