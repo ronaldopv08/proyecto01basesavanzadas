@@ -7,21 +7,19 @@ package GUI.Employees;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
-import Connections.*;
 import Connections.ConnectionSQL;
+import GUI.LoginProvince;
 import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static GUI.LoginProvince.idEmployee;
-import static GUI.LoginProvince.logInProvince;
 
 /**
  *
  * @author ronal
  */
 public class ConsultOrder extends javax.swing.JFrame {
+
     static ResultSet RESULT;
     int cont;
     int orderNumber;
@@ -135,11 +133,11 @@ public class ConsultOrder extends javax.swing.JFrame {
                                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel12))
                                 .addGap(86, 86, 86)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(consultPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(consultDate, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(consultStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(consultName, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(consultStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                                    .addComponent(consultName, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                                    .addComponent(consultDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(88, 88, 88)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -213,200 +211,179 @@ public class ConsultOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
         EmployeeModule employeeModule = new EmployeeModule();
         employeeModule.setVisible(true);
-        employeeModule.setLocationRelativeTo(null);
-        employeeModule.setDefaultCloseOperation(EmployeeModule.HIDE_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_consultOrderBackActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        if (logInProvince ==1){
-                try {
+        if (consultOrderNumber.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete all the fields please.", "Advice", JOptionPane.INFORMATION_MESSAGE);
+        } else if (LoginProvince.getLogInProvince() == 1) {
+            try {
 
-                PreparedStatement pps = ConnectionSQL.getConnectionSQL().prepareStatement("update pedidosSanJose set estadoPedido=2 where idPedido ='" + orderNumber + "'");
+                PreparedStatement pps = ConnectionSQL.getConnectionSQL().prepareStatement("update pedidoSanJose set estadoPedido=2 where idPedido =" + orderNumber + ";");
                 pps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Los datos ha sido modificados");
+                JOptionPane.showMessageDialog(null, "The data has been modified.", "Advice", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (SQLException e) {
                 System.out.println(e);
             } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        }if (logInProvince ==4){
-                try {
+        if (LoginProvince.getLogInProvince() == 4) {
+            try {
 
-                PreparedStatement pps = ConnectionSQL.getConnectionSQL().prepareStatement("update pedidosHeredia set estadoPedido=2 where idPedido ='" + orderNumber + "'");
+                PreparedStatement pps = ConnectionSQL.getConnectionSQL().prepareStatement("update pedidoHeredia set estadoPedido=2 where idPedido =" + orderNumber + ";");
                 pps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Los datos ha sido modificados");
+                JOptionPane.showMessageDialog(null, "The data has been modified.", "Advice", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (SQLException e) {
                 System.out.println(e);
             } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);}
-        }else if(logInProvince ==3){
-                try {
+                Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (LoginProvince.getLogInProvince() == 3) {
+            try {
 
-                PreparedStatement pps = ConnectionSQL.getConnectionSQL().prepareStatement("update pedidosHeredia set estadoPedido=2 where idPedido ='" + orderNumber + "'");
+                PreparedStatement pps = ConnectionSQL.getConnectionSQL().prepareStatement("update pedidoHeredia set estadoPedido=2 where idPedido =" + orderNumber + ";");
                 pps.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Los datos ha sido modificados");
+                JOptionPane.showMessageDialog(null, "The data has been modified.", "Advice", JOptionPane.INFORMATION_MESSAGE);
 
             } catch (SQLException e) {
                 System.out.println(e);
             } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);       
-        }}        
-        EmployeeModule employeeModule = new EmployeeModule();
-        employeeModule.setVisible(true);
-        employeeModule.setLocationRelativeTo(null);
-        employeeModule.setDefaultCloseOperation(EmployeeModule.HIDE_ON_CLOSE);
-        this.dispose();
-        
+                Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void consultOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultOrderButtonActionPerformed
         // TODO add your handling code here:
-        
+
         if (consultOrderNumber.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Ingrese el número de orden", "Información", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Complete all the fields please.", "Advice", JOptionPane.INFORMATION_MESSAGE);
+            return;
         } else {
-            if (logInProvince ==1){
-            try{
-            orderNumber = Integer.parseInt(consultOrderNumber.getText());
-            RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosSanJose where idPedido='" + orderNumber + "'");
-           
+            if (LoginProvince.getLogInProvince() == 1) {
                 try {
+                    orderNumber = Integer.parseInt(consultOrderNumber.getText());
+                    RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidoSanJose where idPedido=" + orderNumber + ";");
 
-                    while (RESULT.next()) {
-                        cont += 1;
+                    try {
 
-                    }
+                        while (RESULT.next()) {
+                            cont += 1;
 
-                    if (cont >= 1) {
-                        RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosSanJose where idPedido='" + orderNumber + "'");
-                        try {
-                            while (RESULT.next()) {
-                                consultName.setText((RESULT.getString(6)));
-                                consultDate.setText(RESULT.getString(2));
-                                consultStatus.setText(RESULT.getString(3));
-                                
-                            }
-                        } catch (SQLException e) {
                         }
-                        RESULT = Connections.ConnectionSQL.createConsult("Select precio,cantidad from medicamento,medicamentoPedidoCartago,pedidosCartago where pedidosCartago.idPedido='" 
-                                + orderNumber + "' and medicamentoPedidoCartago.idPedido= pedidosCartago.idPedido and medicamento.idMedicamento = medicamentoPedidoCartago.idMedicamento");
-                        try {
-                            while (RESULT.next()) {
-                                int precioConsulta = (Integer.parseInt(RESULT.getString(2)))*(Integer.parseInt(RESULT.getString(1)));
-                                consultPrice.setText(Integer.toString(precioConsulta));
-                            }
-                        } catch (SQLException e) {
-                        }
-                    
 
+                        if (cont >= 1) {
+                            RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidoSanJose where idPedido=" + orderNumber + ";");
+                            try {
+                                while (RESULT.next()) {
+                                    consultName.setText((RESULT.getString(6)));
+                                    consultDate.setText(RESULT.getString(2));
+                                    consultStatus.setText(RESULT.getString(3));
+                                }
+
+                                RESULT = Connections.ConnectionSQL.createConsult("select SUM(A.precio*B.cantidad) from medicamento A join medicamentoPedidoSanJose B on A.idMedicamento=B.idMedicamento join pedidoSanJose C on B.idPedido=C.idPedido and C.idPedido=" + orderNumber + " group by C.idPedido");
+                                while (RESULT.next()) {
+                                    consultPrice.setText(Float.toString(RESULT.getFloat(1)));
+                                }
+
+                            } catch (SQLException e) {
+                            }
+
+                        }
+                    } catch (SQLException e) {
+                        JOptionPane.showMessageDialog(null, "The order does not exist, check the data entered", "Error", JOptionPane.PLAIN_MESSAGE);
                     }
-                }catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "No existe la orden, revise el dato ingresado", "Error", JOptionPane.PLAIN_MESSAGE);
-            }}catch (ClassNotFoundException ex) {
-                Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
-            }}
-            if (logInProvince ==4){
-            try{
-            orderNumber = Integer.parseInt(consultOrderNumber.getText());
-            RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosHeredia where idPedido=" + orderNumber + ";");
-           
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (LoginProvince.getLogInProvince() == 4) {
                 try {
+                    orderNumber = Integer.parseInt(consultOrderNumber.getText());
+                    RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidoHeredia where idPedido=" + orderNumber + ";");
 
-                    while (RESULT.next()) {
-                        cont += 1;
+                    try {
 
+                        while (RESULT.next()) {
+                            cont += 1;
+
+                        }
+
+                        if (cont >= 1) {
+                            RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidoHeredia where idPedido=" + orderNumber + ";");
+                            try {
+                                while (RESULT.next()) {
+                                    consultName.setText((RESULT.getString(6)));
+                                    consultDate.setText(RESULT.getString(2));
+                                    consultStatus.setText(RESULT.getString(3));
+                                }
+
+                                RESULT = Connections.ConnectionSQL.createConsult("select SUM(A.precio*B.cantidad) from medicamento A join medicamentoPedidoHeredia B on A.idMedicamento=B.idMedicamento join pedidoHeredia C on B.idPedido=C.idPedido and C.idPedido=" + orderNumber + " group by C.idPedido");
+                                while (RESULT.next()) {
+                                    consultPrice.setText(Float.toString(RESULT.getFloat(1)));
+                                }
+
+                            } catch (SQLException e) {
+                            }
+
+                        }
+                    } catch (SQLException e) {
+                        JOptionPane.showMessageDialog(null, "The order does not exist, check the data entered", "Error", JOptionPane.PLAIN_MESSAGE);
                     }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (LoginProvince.getLogInProvince() == 3) {
+                try {
+                    orderNumber = Integer.parseInt(consultOrderNumber.getText());
+                    RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidoCartago where idPedido=" + orderNumber + ";");
 
-                    if (cont >= 1) {
-                        RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosHeredia where idPedido='" + orderNumber + "'");
-                        try {
-                            while (RESULT.next()) {
-                                consultName.setText((RESULT.getString(6)));
-                                consultDate.setText(RESULT.getString(2));
-                                consultStatus.setText(RESULT.getString(3));
-                                
-                            }
-                        } catch (SQLException e) {
+                    try {
+
+                        while (RESULT.next()) {
+                            cont += 1;
+
                         }
-                        RESULT = Connections.ConnectionSQL.createConsult("Select precio,cantidad from medicamento,medicamentoPedidoCartago,pedidosCartago where pedidosCartago.idPedido='" 
-                                + orderNumber + "' and medicamentoPedidoCartago.idPedido= pedidosCartago.idPedido and medicamento.idMedicamento = medicamentoPedidoCartago.idMedicamento");
-                        try {
-                            while (RESULT.next()) {
-                                int precioConsulta = (Integer.parseInt(RESULT.getString(2)))*(Integer.parseInt(RESULT.getString(1)));
-                                consultPrice.setText(Integer.toString(precioConsulta));
+
+                        if (cont >= 1) {
+                            RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidoCartago where idPedido=" + orderNumber + ";");
+                            try {
+                                while (RESULT.next()) {
+                                    consultName.setText((RESULT.getString(6)));
+                                    consultDate.setText(RESULT.getString(2));
+                                    consultStatus.setText(RESULT.getString(3));
+                                }
+
+                                RESULT = Connections.ConnectionSQL.createConsult("select SUM(A.precio*B.cantidad) from medicamento A join medicamentoPedidoCartago B on A.idMedicamento=B.idMedicamento join pedidoCartago C on B.idPedido=C.idPedido and C.idPedido=" + orderNumber + " group by C.idPedido");
+                                while (RESULT.next()) {
+                                    consultPrice.setText(Float.toString(RESULT.getFloat(1)));
+                                }
+
+                            } catch (SQLException e) {
                             }
-                        } catch (SQLException e) {
+
                         }
-                    
+                    } catch (SQLException e) {
+                        JOptionPane.showMessageDialog(null, "The order does not exist, check the data entered", "Error", JOptionPane.PLAIN_MESSAGE);
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
-                }catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "No existe la orden, revise el dato ingresado", "Error", JOptionPane.PLAIN_MESSAGE);
-            }    
-            }catch (ClassNotFoundException ex) {
-                Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
-            }}
-            else if(logInProvince ==4){
-            try{
-            orderNumber = Integer.parseInt(consultOrderNumber.getText());
-            RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosCartago where idPedido='" + orderNumber + "'");
-           
-                try {
+        }
 
-                    while (RESULT.next()) {
-                        cont += 1;
-
-                    }
-
-                    if (cont >= 1) {
-                        RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosCartago where idPedido='" + orderNumber + "'");
-                        try {
-                            while (RESULT.next()) {
-                                consultName.setText((RESULT.getString(6)));
-                                consultDate.setText(RESULT.getString(2));
-                                consultStatus.setText(RESULT.getString(3));
-                                
-                            }
-                        } catch (SQLException e) {
-                        }
-                        RESULT = Connections.ConnectionSQL.createConsult("Select precio,cantidad from medicamento,medicamentoPedidoCartago,pedidosCartago where pedidosCartago.idPedido='" 
-                                + orderNumber + "' and medicamentoPedidoCartago.idPedido= pedidosCartago.idPedido and medicamento.idMedicamento = medicamentoPedidoCartago.idMedicamento");
-                        try {
-                            while (RESULT.next()) {
-                                int precioConsulta = (Integer.parseInt(RESULT.getString(2)))*(Integer.parseInt(RESULT.getString(1)));
-                                consultPrice.setText(Integer.toString(precioConsulta));
-                            }
-                        } catch (SQLException e) {
-                        }
-                    
-
-            }
-                }catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "No existe la orden, revise el dato ingresado", "Error", JOptionPane.PLAIN_MESSAGE);
-            }        
-            }catch (ClassNotFoundException ex) {
-                Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
-            }
-               
-        
-        }}
-                
-        
-            
-        
-
-           
 
     }//GEN-LAST:event_consultOrderButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel consultDate;

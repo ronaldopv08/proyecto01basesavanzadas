@@ -132,8 +132,6 @@ public class signIn extends javax.swing.JFrame {
         char[] typedPassword = signInPassword.getPassword();
         String typedPasswordS = new String(typedPassword);
         count = 0;
-        System.out.println(typedUserName);
-        System.out.println(typedPasswordS);
         
         if(typedUserName.length() == 0 ||  typedPasswordS.length() == 0){
             JOptionPane.showMessageDialog(this, "Complete all the fields please.", "Advice", JOptionPane.INFORMATION_MESSAGE);

@@ -78,11 +78,11 @@
                                       <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="86" pref="86" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Component id="consultPrice" min="-2" pref="56" max="-2" attributes="0"/>
-                                      <Component id="consultDate" min="-2" pref="52" max="-2" attributes="0"/>
-                                      <Component id="consultStatus" min="-2" pref="102" max="-2" attributes="0"/>
-                                      <Component id="consultName" alignment="0" min="-2" pref="102" max="-2" attributes="0"/>
+                                      <Component id="consultStatus" pref="102" max="32767" attributes="0"/>
+                                      <Component id="consultName" alignment="0" pref="102" max="32767" attributes="0"/>
+                                      <Component id="consultDate" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                               </Group>
