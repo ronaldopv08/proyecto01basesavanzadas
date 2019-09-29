@@ -48,19 +48,19 @@ public class AddDataProcedures {
         entry.execute();    
     }
     public static void registerMedicineOrderSanJose(int medicineID, int quantity) throws SQLException, ClassNotFoundException {
-        CallableStatement entry = ConnectionSQL.getConnectionSQL().prepareCall("{call ingresarPedidoSanJose(?,?)}");
+        CallableStatement entry = ConnectionSQL.getConnectionSQL().prepareCall("{call ingresarMedicamentoPedidoSanJose(?,?)}");
         entry.setInt(1, medicineID);
         entry.setInt(2, quantity);
         entry.execute();    
     }
     public static void registerMedicineOrderCartago(int medicineID, int quantity) throws SQLException, ClassNotFoundException {
-        CallableStatement entry = ConnectionSQL.getConnectionSQL().prepareCall("{call ingresarPedidoCartago(?,?)}");
+        CallableStatement entry = ConnectionSQL.getConnectionSQL().prepareCall("{call ingresarMedicamentoPedidoCartago(?,?)}");
         entry.setInt(1, medicineID);
         entry.setInt(2, quantity);
         entry.execute();    
     }
     public static void registerMedicineOrderHeredia(int medicineID, int quantity) throws SQLException, ClassNotFoundException {
-        CallableStatement entry = ConnectionSQL.getConnectionSQL().prepareCall("{call ingresarPedidoHeredia(?,?)}");
+        CallableStatement entry = ConnectionSQL.getConnectionSQL().prepareCall("{call ingresarMedicamentoPedidoHeredia(?,?)}");
         entry.setInt(1, medicineID);
         entry.setInt(2, quantity);
         entry.execute();    
