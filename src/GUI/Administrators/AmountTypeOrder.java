@@ -5,6 +5,13 @@
  */
 package GUI.Administrators;
 
+import Connections.AddDataProcedures;
+import GUI.LoginProvince;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ronal
@@ -34,9 +41,9 @@ public class AmountTypeOrder extends javax.swing.JFrame {
         consult = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         back = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
+        monthCB = new javax.swing.JComboBox<>();
+        typeCB = new javax.swing.JComboBox<>();
+        totalAmountOrders = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,11 +69,11 @@ public class AmountTypeOrder extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        monthCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select the month", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        typeCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select the order type", "Regular", "Special" }));
 
-        jLabel5.setText("0");
+        totalAmountOrders.setText("0");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -84,8 +91,8 @@ public class AmountTypeOrder extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox1, 0, 158, Short.MAX_VALUE)
-                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(monthCB, 0, 158, Short.MAX_VALUE)
+                                    .addComponent(typeCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -96,7 +103,7 @@ public class AmountTypeOrder extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(50, 50, 50)
-                        .addComponent(jLabel5)
+                        .addComponent(totalAmountOrders)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -112,17 +119,17 @@ public class AmountTypeOrder extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(monthCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(34, 34, 34)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(typeCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(back))
                 .addGap(69, 69, 69)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addComponent(totalAmountOrders))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
 
@@ -156,7 +163,32 @@ public class AmountTypeOrder extends javax.swing.JFrame {
     }//GEN-LAST:event_backActionPerformed
 
     private void consultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultActionPerformed
-        
+        if (monthCB.getSelectedIndex()==0 || typeCB.getSelectedIndex()==0){
+            JOptionPane.showMessageDialog(this, "Please select a month and type to consult.");
+        }
+        String selectedMonth = String.valueOf(monthCB.getSelectedIndex());
+        String selectedType = String.valueOf(typeCB.getSelectedIndex());
+        if (LoginProvince.logInProvince==1){
+            try {
+                totalAmountOrders.setText(AddDataProcedures.consultAdministratorAmountPerTypeMonthSanJose(selectedMonth, selectedType));
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (LoginProvince.logInProvince==3){
+            try {
+                totalAmountOrders.setText(AddDataProcedures.consultAdministratorAmountPerTypeMonthCartago(selectedMonth, selectedType));
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (LoginProvince.logInProvince==4){
+            try {
+                totalAmountOrders.setText(AddDataProcedures.consultAdministratorAmountPerTypeMonthHeredia(selectedMonth, selectedType));
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_consultActionPerformed
 
     /**
@@ -175,15 +207,26 @@ public class AmountTypeOrder extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AmountTypeOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AmountTypeOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AmountTypeOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AmountTypeOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -212,13 +255,13 @@ public class AmountTypeOrder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back;
     private javax.swing.JButton consult;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> monthCB;
+    private javax.swing.JLabel totalAmountOrders;
+    private javax.swing.JComboBox<String> typeCB;
     // End of variables declaration//GEN-END:variables
 }
