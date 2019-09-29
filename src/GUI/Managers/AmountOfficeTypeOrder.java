@@ -295,7 +295,7 @@ public class AmountOfficeTypeOrder extends javax.swing.JFrame {
                 String initialDate = initialYear.getText() + "-" + initialMonth.getText() + "-" + initialDay.getText();
                 String finalDate = finalYear.getText() + "-" + finalMonth.getText() + "-" + finalDay.getText();
                 try {
-                    int orderType = amountTypeOrder.getSelectedIndex();
+                    int orderType = amountTypeOrder.getSelectedIndex()+1;
                     loadDataOfficesTypeOrder(initialDate, finalDate, orderType);
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(TopClients.class.getName()).log(Level.SEVERE, null, ex);
