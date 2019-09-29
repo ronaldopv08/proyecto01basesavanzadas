@@ -172,7 +172,7 @@ public class AddDataProcedures {
     
     //Procedure Three
     public static ResultSet bestClients(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
-        resultFromQuery=ConnectionSQL.createConsult("exec mejoresTresClientes "+initialDate+","+finalDate+";");
+        resultFromQuery=ConnectionSQL.createConsult("exec mejoresTresClientes '"+initialDate+"','"+finalDate+"';");
         return resultFromQuery;
     }
     
