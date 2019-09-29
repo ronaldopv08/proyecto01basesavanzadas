@@ -10,6 +10,8 @@ package GUI;
  * @author Gabriel
  */
 public class LoginProvince {
+
+    
     public static int logInProvince;
     public static int idEmployee;
     
@@ -18,5 +20,12 @@ public class LoginProvince {
     }
     public static void setEmployee(int employeeID){
         idEmployee=employeeID;
+    }
+    public static int getLogInProvince() {
+        return logInProvince;
+    }
+
+    public static int getIdEmployee() {
+        return idEmployee;
     }
 }
