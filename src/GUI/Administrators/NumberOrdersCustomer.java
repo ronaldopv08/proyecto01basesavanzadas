@@ -6,6 +6,7 @@
 package GUI.Administrators;
 
 import Connections.AddDataProcedures;
+import Connections.ConnectionSQL;
 import GUI.LoginProvince;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,10 +39,118 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
             resultFromQuery = AddDataProcedures.consultAdministratorQuantityOrdersHerediaDrugStore(initialDate, finalDate);
             Vector dataOfficeAmountHeredia = new Vector();
             while (resultFromQuery.next()) {
-                dataOfficeAmountHeredia.add(resultFromQuery.getFloat(1));
+                dataOfficeAmountHeredia.add(resultFromQuery.getInt(1));
+                dataOfficeAmountHeredia.add(resultFromQuery.getString(2));
+                dataOfficeAmountHeredia.add(resultFromQuery.getInt(3));
             }
             amountsHeredia.addRow(dataOfficeAmountHeredia);
             customersTable.setModel(amountsHeredia);
+        } catch (SQLException e) {
+        }
+    }
+    
+    
+    public void getOrdersHeredia(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
+        DefaultTableModel amountsHeredia = (DefaultTableModel) ordersTable.getModel();
+        amountsHeredia.setRowCount(0);
+
+        try {
+            resultFromQuery = ConnectionSQL.
+       createConsult("select A.idPedido,C.nombre,A.idContacto,A.fecha from pedidosTotalesTodosDatos "
+       + "A join clientesTotalesTodosDatos C on A.idContacto=C.idContacto join farmaciasTotales B "
+       + "on A.cedulaJuridica=B.cedulaJuridica and A.estadoPedido=2 and B.idProvincia=4 and A.fecha between '"+initialDate+"' and '"+finalDate+"';");
+                    
+            Vector dataOfficeAmountHeredia = new Vector();
+            while (resultFromQuery.next()) {
+                dataOfficeAmountHeredia.add(resultFromQuery.getInt(1));
+                dataOfficeAmountHeredia.add(resultFromQuery.getString(2));
+                dataOfficeAmountHeredia.add(resultFromQuery.getInt(3));
+                dataOfficeAmountHeredia.add(resultFromQuery.getString(3));
+            }
+            amountsHeredia.addRow(dataOfficeAmountHeredia);
+            ordersTable.setModel(amountsHeredia);
+        } catch (SQLException e) {
+        }
+    }
+    
+    public void getClientsCartago(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
+        DefaultTableModel amountsCartago = (DefaultTableModel) customersTable.getModel();
+        amountsCartago.setRowCount(0);
+
+        try {
+            resultFromQuery = AddDataProcedures.consultAdministratorQuantityOrdersHerediaDrugStore(initialDate, finalDate);
+            Vector dataOfficeAmountCartago = new Vector();
+            while (resultFromQuery.next()) {
+                dataOfficeAmountCartago.add(resultFromQuery.getInt(1));
+                dataOfficeAmountCartago.add(resultFromQuery.getString(2));
+                dataOfficeAmountCartago.add(resultFromQuery.getInt(3));
+            }
+            amountsCartago.addRow(dataOfficeAmountCartago);
+            customersTable.setModel(amountsCartago);
+        } catch (SQLException e) {
+        }
+    }
+    
+    public void getOrdersCartago(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
+        DefaultTableModel amountsCartago = (DefaultTableModel) ordersTable.getModel();
+        amountsCartago.setRowCount(0);
+
+        try {
+            resultFromQuery = ConnectionSQL.
+       createConsult("select A.idPedido,C.nombre,A.idContacto,A.fecha from pedidosTotalesTodosDatos "
+       + "A join clientesTotalesTodosDatos C on A.idContacto=C.idContacto join farmaciasTotales B "
+       + "on A.cedulaJuridica=B.cedulaJuridica and A.estadoPedido=2 and B.idProvincia=3 and A.fecha between '"+initialDate+"' and '"+finalDate+"';");
+                    
+            Vector dataOfficeAmountCartago = new Vector();
+            while (resultFromQuery.next()) {
+                dataOfficeAmountCartago.add(resultFromQuery.getInt(1));
+                dataOfficeAmountCartago.add(resultFromQuery.getString(2));
+                dataOfficeAmountCartago.add(resultFromQuery.getInt(3));
+                dataOfficeAmountCartago.add(resultFromQuery.getString(3));
+            }
+            amountsCartago.addRow(dataOfficeAmountCartago);
+            ordersTable.setModel(amountsCartago);
+        } catch (SQLException e) {
+        }
+    }
+    
+    public void getClientsSanJose(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
+        DefaultTableModel amountsSanJose = (DefaultTableModel) customersTable.getModel();
+        amountsSanJose.setRowCount(0);
+
+        try {
+            resultFromQuery = AddDataProcedures.consultAdministratorQuantityOrdersHerediaDrugStore(initialDate, finalDate);
+            Vector dataOfficeAmountSanJose = new Vector();
+            while (resultFromQuery.next()) {
+                dataOfficeAmountSanJose.add(resultFromQuery.getInt(1));
+                dataOfficeAmountSanJose.add(resultFromQuery.getString(2));
+                dataOfficeAmountSanJose.add(resultFromQuery.getInt(3));
+            }
+            amountsSanJose.addRow(dataOfficeAmountSanJose);
+            customersTable.setModel(amountsSanJose);
+        } catch (SQLException e) {
+        }
+    }
+    
+    public void getOrdersSanJose(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
+        DefaultTableModel amountsSanJose = (DefaultTableModel) ordersTable.getModel();
+        amountsSanJose.setRowCount(0);
+
+        try {
+            resultFromQuery = ConnectionSQL.
+       createConsult("select A.idPedido,C.nombre,A.idContacto,A.fecha from pedidosTotalesTodosDatos "
+       + "A join clientesTotalesTodosDatos C on A.idContacto=C.idContacto join farmaciasTotales B "
+       + "on A.cedulaJuridica=B.cedulaJuridica and A.estadoPedido=2 and B.idProvincia=3 and A.fecha between '"+initialDate+"' and '"+finalDate+"';");
+                    
+            Vector dataOfficeAmountSanJose = new Vector();
+            while (resultFromQuery.next()) {
+                dataOfficeAmountSanJose.add(resultFromQuery.getInt(1));
+                dataOfficeAmountSanJose.add(resultFromQuery.getString(2));
+                dataOfficeAmountSanJose.add(resultFromQuery.getInt(3));
+                dataOfficeAmountSanJose.add(resultFromQuery.getString(3));
+            }
+            amountsSanJose.addRow(dataOfficeAmountSanJose);
+            ordersTable.setModel(amountsSanJose);
         } catch (SQLException e) {
         }
     }
@@ -94,17 +203,17 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
 
         customersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Customer", "Quantity"
+                "Customer ID", "Customer", "Quantity of Orders"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -130,11 +239,11 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Order Number", "Customer", "Price", "Date"
+                "Order Number", "Client", "Client ID", "Date"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -288,24 +397,33 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Complete all the fields please");
         }
+        String initialDate = initialYear.getText() + "-" + initialMonth.getText() + "-" + initialDay.getText();
+        String finalDate = finalYear.getText() + "-" + finalMonth.getText() + "-" + finalDay.getText();
         if (LoginProvince.logInProvince == 1) {
             try {
-                totalAmountOrders.setText(AddDataProcedures.consultAdministratorAmountPerTypeMonthSanJose(selectedMonth, selectedType));
+                 getClientsSanJose(initialDate,finalDate);
+                 getOrdersSanJose(initialDate,finalDate);
+                 
             } catch (SQLException | ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "Validate the data");
                 Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (LoginProvince.logInProvince == 3) {
             try {
-                totalAmountOrders.setText(AddDataProcedures.consultAdministratorAmountPerTypeMonthCartago(selectedMonth, selectedType));
+                getClientsCartago(initialDate,finalDate);
+                getOrdersCartago(initialDate,finalDate);
             } catch (SQLException | ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "Validate the data");
                 Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (LoginProvince.logInProvince == 4) {
             try {
-                totalAmountOrders.setText(AddDataProcedures.consultAdministratorAmountPerTypeMonthHeredia(selectedMonth, selectedType));
+                getClientsHeredia(initialDate,finalDate);
+                getOrdersHeredia(initialDate,finalDate);
             } catch (SQLException | ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(this, "Validate the data");
                 Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

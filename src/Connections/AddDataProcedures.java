@@ -88,21 +88,20 @@ public class AddDataProcedures {
     }
     
     //Procedure two
-    public static void consultAdministratorQuantityOrdersCartagoDrugStore(String initialDate, String finalDate)
+    public static ResultSet consultAdministratorQuantityOrdersCartagoDrugStore(String initialDate, String finalDate)
        throws SQLException, ClassNotFoundException {
-       CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaAdministradorCantidadPedidosCartago(?,?)}");
-        entry.setString(1, initialDate);
-        entry.setString(2, finalDate);
-        entry.execute();    
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosCartago '"+initialDate+"','"+finalDate+"';");
+        return resultFromQuery;       
     }
-    public static void consultAdministratorQuantityOrdersSanJoseDrugStore(String initialDate, String finalDate)
+    public static ResultSet consultAdministratorQuantityOrdersHerediaDrugStore(String initialDate, String finalDate)
        throws SQLException, ClassNotFoundException {
-       CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaAdministradorCantidadPedidosSanJose(?,?)}");
-       entry.setString(1, initialDate);
-       entry.setString(2, finalDate);
-       entry.execute();    
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosHeredia '"+initialDate+"','"+finalDate+"';");
+        return resultFromQuery;       
+    }
+    public static ResultSet consultAdministratorQuantityOrdersSanJoseDrugStore(String initialDate, String finalDate)
+       throws SQLException, ClassNotFoundException {
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosSanJose '"+initialDate+"','"+finalDate+"';");
+        return resultFromQuery;       
     }
     
     //Procedure three  montoPedidoPorTipoYMesCartago(@mes int, @tipoPedido int)
