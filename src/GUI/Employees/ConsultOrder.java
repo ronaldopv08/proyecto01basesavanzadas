@@ -272,16 +272,16 @@ public class ConsultOrder extends javax.swing.JFrame {
             if (logInProvince ==1){
             try{
             orderNumber = Integer.parseInt(consultOrderNumber.getText());
-            RESULT = Connections.ConnectionSQL.createConsult("Select count(idPedido) from pedidosSanJose where idPedido='" + orderNumber + "'");
+            RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosSanJose where idPedido='" + orderNumber + "'");
            
                 try {
 
                     while (RESULT.next()) {
-                        cont = RESULT.getInt(1);
+                        cont += 1;
 
                     }
 
-                    if (cont >= 0) {
+                    if (cont >= 1) {
                         RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosSanJose where idPedido='" + orderNumber + "'");
                         try {
                             while (RESULT.next()) {
@@ -312,16 +312,16 @@ public class ConsultOrder extends javax.swing.JFrame {
             if (logInProvince ==4){
             try{
             orderNumber = Integer.parseInt(consultOrderNumber.getText());
-            RESULT = Connections.ConnectionSQL.createConsult("Select count(idPedido) from pedidosHeredia where idPedido='" + orderNumber + "'");
+            RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosHeredia where idPedido=" + orderNumber + ";");
            
                 try {
 
                     while (RESULT.next()) {
-                        cont = RESULT.getInt(1);
+                        cont += 1;
 
                     }
 
-                    if (cont >= 0) {
+                    if (cont >= 1) {
                         RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosHeredia where idPedido='" + orderNumber + "'");
                         try {
                             while (RESULT.next()) {
@@ -353,16 +353,16 @@ public class ConsultOrder extends javax.swing.JFrame {
             else if(logInProvince ==4){
             try{
             orderNumber = Integer.parseInt(consultOrderNumber.getText());
-            RESULT = Connections.ConnectionSQL.createConsult("Select count(idPedido) from pedidosCartago where idPedido='" + orderNumber + "'");
+            RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosCartago where idPedido='" + orderNumber + "'");
            
                 try {
 
                     while (RESULT.next()) {
-                        cont = RESULT.getInt(1);
+                        cont += 1;
 
                     }
 
-                    if (cont >= 0) {
+                    if (cont >= 1) {
                         RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosCartago where idPedido='" + orderNumber + "'");
                         try {
                             while (RESULT.next()) {

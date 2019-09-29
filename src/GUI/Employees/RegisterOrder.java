@@ -38,6 +38,7 @@ import java.util.logging.Logger;
 public class RegisterOrder extends javax.swing.JFrame {
     
     static ResultSet res;
+    private static int medicineUnities;
     
 
     /**
@@ -103,7 +104,7 @@ public class RegisterOrder extends javax.swing.JFrame {
                 java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -309,7 +310,9 @@ public class RegisterOrder extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = registerOrderMedicines.getSelectedRow();
         int idMedicineOrder= Integer.parseInt(registerOrderMedicines.getValueAt(row, 0).toString());
-        int medicineUnities= Integer.parseInt(registerOrderMedicines.getValueAt(row, 4).toString());
+        medicineUnities= Integer.parseInt(registerOrderMedicines.getValueAt(row, 4).toString());
+        System.out.println(registerOrderMedicines.getValueAt(row, 0).toString());
+        System.out.println(registerOrderMedicines.getValueAt(row, 4).toString());
         if (logInProvince == 1){
                 try {
                     AddDataProcedures.registerMedicineOrderSanJose(idMedicineOrder , medicineUnities );

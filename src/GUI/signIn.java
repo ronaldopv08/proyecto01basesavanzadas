@@ -233,6 +233,7 @@ public class signIn extends javax.swing.JFrame {
         
         if ("Employee".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){
             int idEmployee=0;
+            int idProvince=0;
             try {
                 resultFromQuery = Connections.AddDataProcedures.verifiedEmployee(typedUserName, typedPasswordS,"1");
                 try{
@@ -247,6 +248,11 @@ public class signIn extends javax.swing.JFrame {
                     while(resultFromQuery.next()){
                         idEmployee = resultFromQuery.getInt(1);
                         LoginProvince.setEmployee(idEmployee);
+                    }
+                    resultFromQuery=ConnectionSQL.createConsult("select C.idProvincia from empleadosTotales A join farmaciasTotales B on A.cedulaJuridica=B.cedulaJuridica join provincia C on B.idProvincia=C.idProvincia and A.usuario='"+typedUserName+"' and A.contraseña='"+typedPasswordS+"';");
+                    while(resultFromQuery.next()){
+                        idProvince = resultFromQuery.getInt(1);
+                        LoginProvince.setProvince(idProvince);
                     }
                     JOptionPane.showMessageDialog(this, "Successful logging!", "Advice", JOptionPane.INFORMATION_MESSAGE);
                     EmployeeModule employeeAccess = new EmployeeModule();
