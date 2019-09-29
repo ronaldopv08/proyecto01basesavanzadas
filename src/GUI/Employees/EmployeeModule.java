@@ -6,6 +6,7 @@
 package GUI.Employees;
 
 import GUI.signIn;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -115,6 +116,7 @@ public class EmployeeModule extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void employeeModuleRegisterOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeModuleRegisterOrderActionPerformed
+        
         try {
             RegisterOrder registerOrder = new RegisterOrder();
             registerOrder.setVisible(true);
@@ -123,7 +125,10 @@ public class EmployeeModule extends javax.swing.JFrame {
             this.dispose();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(EmployeeModule.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EmployeeModule.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_employeeModuleRegisterOrderActionPerformed
 
     private void employeeModuleConsultOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeModuleConsultOrderActionPerformed
