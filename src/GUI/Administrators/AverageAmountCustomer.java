@@ -233,28 +233,30 @@ public class AverageAmountCustomer extends javax.swing.JFrame {
         if (endDate < beginDate){
             JOptionPane.showMessageDialog(this, "Please use valid date range.");
         }
-        String beginDateFormat = BeginDateChoosed.getDate().toString();
-        String endDateFormart = EndDateChoosed.getDateFormatString();
-        System.out.println(endDateFormart);
-        System.out.println(beginDateFormat);
+        java.sql.Date sqlBeginDate = new java.sql.Date(BeginDateChoosed.getDate().getTime());
+        java.sql.Date sqlEndDate = new java.sql.Date(EndDateChoosed.getDate().getTime());
+        String sqlBeginDateString = String.valueOf(sqlBeginDate);
+        String sqlEndDateString = String.valueOf(sqlEndDate);
+        System.out.println(sqlBeginDateString);
+        System.out.println(sqlEndDateString);
         
         if (LoginProvince.logInProvince==1){
             try {
-                fillTableSanJose(beginDateFormat, endDateFormart);
+                fillTableSanJose(sqlBeginDateString, sqlEndDateString);
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(AverageAmountCustomer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (LoginProvince.logInProvince==3){
             try {
-                fillTableCartago(beginDateFormat, endDateFormart);
+                fillTableCartago(sqlBeginDateString, sqlEndDateString);
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(AverageAmountCustomer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (LoginProvince.logInProvince==4){
             try {
-                fillTableHeredia(beginDateFormat, endDateFormart);
+                fillTableHeredia(sqlBeginDateString, sqlEndDateString);
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(AverageAmountCustomer.class.getName()).log(Level.SEVERE, null, ex);
             }
