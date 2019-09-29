@@ -100,7 +100,7 @@ public class AddDataProcedures {
     //Procedure three  montoPedidoPorTipoYMesCartago(@mes int, @tipoPedido int)
     public static String consultAdministratorAmountPerTypeMonthSanJose(String month, String orderType)
        throws SQLException, ClassNotFoundException {
-        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosSanJose "+month+","+orderType);
+        ResultSet result = ConnectionSQL.createConsult("exec montoPedidoPorTipoYMesSanJose "+month+","+orderType);
         result.next();
         String amount = result.getString(1);
         if (amount==null){
@@ -110,7 +110,7 @@ public class AddDataProcedures {
     }
     public static String consultAdministratorAmountPerTypeMonthCartago(String month, String orderType)
        throws SQLException, ClassNotFoundException {
-        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosCartago "+month+","+orderType);
+        ResultSet result = ConnectionSQL.createConsult("exec montoPedidoPorTipoYMesCartago "+month+","+orderType);
         result.next();
         String amount = result.getString(1);
         if (amount==null){
@@ -120,7 +120,7 @@ public class AddDataProcedures {
     }
     public static String consultAdministratorAmountPerTypeMonthHeredia(String month, String orderType)
        throws SQLException, ClassNotFoundException {
-        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosHeredia "+month+","+orderType);
+        ResultSet result = ConnectionSQL.createConsult("exec montoPedidoPorTipoYMesHeredia "+month+","+orderType);
         result.next();
         String amount = result.getString(1);
         if (amount==null){
