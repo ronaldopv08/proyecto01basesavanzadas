@@ -284,6 +284,7 @@ public class AmountOffice extends javax.swing.JFrame {
                 }
                 JOptionPane.showMessageDialog(this, "Best 3 clients in the bussiness!");
             }catch (SQLException e) {
+           JOptionPane.showMessageDialog(this, "Data not typed correctly");
         } 
         }        // TODO add your handling code here:
     }//GEN-LAST:event_amountOfficeConsultActionPerformed
