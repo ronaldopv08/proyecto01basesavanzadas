@@ -143,6 +143,7 @@ public class signIn extends javax.swing.JFrame {
         }
         
         if ("Client".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){
+            int idContact = 0;
             try {
                 resultFromQuery = Connections.AddDataProcedures.verifiedContact(typedUserName, typedPasswordS);
                 try{
@@ -153,8 +154,12 @@ public class signIn extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, e, "Advice", JOptionPane.INFORMATION_MESSAGE);
                 }
                 if (count >= 1){
+                    resultFromQuery=ConnectionSQL.createConsult("select * from clientesTotalesTodosDatos A where A.usuario='"+typedUserName+"' and A.contraseña='"+typedPasswordS+"';");
+                    while(resultFromQuery.next()){
+                        idContact = resultFromQuery.getInt(1);
+                    }
                     JOptionPane.showMessageDialog(this, "Successful logging!", "Advice", JOptionPane.INFORMATION_MESSAGE);
-                    clientModule clientAccess = new clientModule();
+                    clientModule clientAccess = new clientModule(idContact);
                     clientAccess.setVisible(true);
                     this.dispose();
                 }
