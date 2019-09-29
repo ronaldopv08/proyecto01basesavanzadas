@@ -173,7 +173,8 @@ public class signIn extends javax.swing.JFrame {
                 }          
         }
         
-        if ("Administrator".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){ 
+        if ("Administrator".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){
+            int idProvince=0;
             try {
                 resultFromQuery = Connections.AddDataProcedures.verifiedEmployee(typedUserName, typedPasswordS,"2");
                 try{
@@ -184,6 +185,10 @@ public class signIn extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, e, "Advice", JOptionPane.INFORMATION_MESSAGE);
                 }
                 if (count >= 1){
+                    resultFromQuery=ConnectionSQL.createConsult("select C.idProvincia from empleadosTotales A join farmaciasTotales B on A.cedulaJuridica=B.cedulaJuridica join provincia C on B.idProvincia=C.idProvincia and A.usuario='"+typedUserName+"' and A.contraseña='"+typedPasswordS+"';");
+                    while(resultFromQuery.next()){
+                        idProvince = resultFromQuery.getInt(1);
+                    }
                     JOptionPane.showMessageDialog(this, "Successful logging!", "Advice", JOptionPane.INFORMATION_MESSAGE);
                     AdministratorModule administratorAccess = new AdministratorModule();
                     administratorAccess.setVisible(true);
