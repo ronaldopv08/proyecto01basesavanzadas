@@ -140,14 +140,14 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
             resultFromQuery = ConnectionSQL.
        createConsult("select A.idPedido,C.nombre,A.idContacto,A.fecha from pedidosTotalesTodosDatos "
        + "A join clientesTotalesTodosDatos C on A.idContacto=C.idContacto join farmaciasTotales B "
-       + "on A.cedulaJuridica=B.cedulaJuridica and A.estadoPedido=2 and B.idProvincia=3 and A.fecha between '"+initialDate+"' and '"+finalDate+"';");
+       + "on A.cedulaJuridica=B.cedulaJuridica and A.estadoPedido=2 and B.idProvincia=1 and A.fecha between '"+initialDate+"' and '"+finalDate+"';");
                     
             Vector dataOfficeAmountSanJose = new Vector();
             while (resultFromQuery.next()) {
                 dataOfficeAmountSanJose.add(resultFromQuery.getInt(1));
                 dataOfficeAmountSanJose.add(resultFromQuery.getString(2));
                 dataOfficeAmountSanJose.add(resultFromQuery.getInt(3));
-                dataOfficeAmountSanJose.add(resultFromQuery.getString(3));
+                dataOfficeAmountSanJose.add(resultFromQuery.getString(4));
             }
             amountsSanJose.addRow(dataOfficeAmountSanJose);
             ordersTable.setModel(amountsSanJose);
