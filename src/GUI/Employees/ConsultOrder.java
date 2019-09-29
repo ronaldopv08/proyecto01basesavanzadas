@@ -5,11 +5,26 @@
  */
 package GUI.Employees;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+import Connections.*;
+import Connections.ConnectionSQL;
+import java.sql.PreparedStatement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static GUI.LoginProvince.idEmployee;
+import static GUI.LoginProvince.logInProvince;
+
 /**
  *
  * @author ronal
  */
 public class ConsultOrder extends javax.swing.JFrame {
+    static ResultSet RESULT;
+    int cont;
+    int orderNumber;
 
     /**
      * Creates new form ConsultOrder
@@ -33,30 +48,17 @@ public class ConsultOrder extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         consultOrderNumber = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        consultOrderIDClient = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         consultOrderButton = new javax.swing.JButton();
         consultOrderBack = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        consultNumber = new javax.swing.JLabel();
         consultDate = new javax.swing.JLabel();
-        consultType = new javax.swing.JLabel();
         consultStatus = new javax.swing.JLabel();
         consultName = new javax.swing.JLabel();
-        consultPlace = new javax.swing.JLabel();
-        consultEmployee = new javax.swing.JLabel();
         consultPrice = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,11 +79,12 @@ public class ConsultOrder extends javax.swing.JFrame {
 
         jLabel2.setText("Order Number:");
 
-        jLabel3.setText("ID Client:");
-
-        jLabel4.setText("Date:");
-
         consultOrderButton.setText("Consult");
+        consultOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultOrderButtonActionPerformed(evt);
+            }
+        });
 
         consultOrderBack.setText("Back");
         consultOrderBack.addActionListener(new java.awt.event.ActionListener() {
@@ -90,52 +93,28 @@ public class ConsultOrder extends javax.swing.JFrame {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Medicine", "Image", "Unities"
-            }
-        ));
-        jScrollPane3.setViewportView(jTable2);
-
-        jLabel5.setText("Order Number:");
-
         jLabel6.setText("Date:");
-
-        jLabel7.setText("Type:");
 
         jLabel8.setText("Status:");
 
-        jLabel9.setText("Name Client:");
-
-        jLabel10.setText("Place:");
-
-        jLabel11.setText("Employee Name:");
+        jLabel9.setText("Client ID:");
 
         jLabel12.setText("Price:");
 
-        jLabel13.setText("Medicines");
-
-        consultNumber.setText("jLabel14");
-
         consultDate.setText("jLabel15");
-
-        consultType.setText("jLabel16");
 
         consultStatus.setText("jLabel17");
 
         consultName.setText("jLabel18");
 
-        consultPlace.setText("jLabel19");
-
-        consultEmployee.setText("jLabel20");
-
         consultPrice.setText("jLabel21");
+
+        jButton1.setText("Change Status");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -145,130 +124,86 @@ public class ConsultOrder extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(consultOrderBack, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(consultOrderNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel12))
+                                .addGap(86, 86, 86)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(consultPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(consultDate, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(consultStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(consultName, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(88, 88, 88)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel1)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel4)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(jLabel3)))
-                                            .addGap(18, 18, 18)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(consultOrderNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                                                .addComponent(consultOrderIDClient))))
-                                    .addComponent(jLabel13))
-                                .addGap(164, 164, 164)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(393, 393, 393)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel12))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(consultOrderButton)
-                    .addComponent(consultStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                    .addComponent(consultNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(consultDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(consultType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(consultName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(consultPlace, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(consultEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(consultPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                                .addGap(45, 45, 45)
+                                .addComponent(consultOrderButton)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                                    .addComponent(consultOrderBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(201, 201, 201))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(consultNumber))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(consultDate))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(consultType))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(consultStatus))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel2)
+                            .addComponent(consultOrderNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(consultOrderButton))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(consultName))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel13)
-                            .addComponent(consultPlace)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(consultOrderNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(consultOrderIDClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
-                            .addComponent(consultEmployee))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addComponent(consultPrice))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(consultOrderBack)
-                            .addComponent(consultOrderButton))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(consultDate, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(consultOrderBack)))
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel8))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(consultStatus)
+                        .addComponent(jButton1)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(consultPrice)
+                    .addComponent(jLabel12))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 546, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -283,71 +218,213 @@ public class ConsultOrder extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_consultOrderBackActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if (logInProvince ==1){
+                try {
+
+                PreparedStatement pps = ConnectionSQL.getConnectionSQL().prepareStatement("update pedidosSanJose set estadoPedido=2 where idPedido ='" + orderNumber + "'");
+                pps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Los datos ha sido modificados");
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }if (logInProvince ==4){
+                try {
+
+                PreparedStatement pps = ConnectionSQL.getConnectionSQL().prepareStatement("update pedidosHeredia set estadoPedido=2 where idPedido ='" + orderNumber + "'");
+                pps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Los datos ha sido modificados");
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);}
+        }else if(logInProvince ==3){
+                try {
+
+                PreparedStatement pps = ConnectionSQL.getConnectionSQL().prepareStatement("update pedidosHeredia set estadoPedido=2 where idPedido ='" + orderNumber + "'");
+                pps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Los datos ha sido modificados");
+
+            } catch (SQLException e) {
+                System.out.println(e);
+            } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);       
+        }}        
+        EmployeeModule employeeModule = new EmployeeModule();
+        employeeModule.setVisible(true);
+        employeeModule.setLocationRelativeTo(null);
+        employeeModule.setDefaultCloseOperation(EmployeeModule.HIDE_ON_CLOSE);
+        this.dispose();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void consultOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultOrderButtonActionPerformed
+        // TODO add your handling code here:
+        
+        if (consultOrderNumber.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese el número de orden", "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            if (logInProvince ==1){
+            try{
+            orderNumber = Integer.parseInt(consultOrderNumber.getText());
+            RESULT = Connections.ConnectionSQL.createConsult("Select count(idPedido) from pedidosSanJose where idPedido='" + orderNumber + "'");
+           
+                try {
+
+                    while (RESULT.next()) {
+                        cont = RESULT.getInt(1);
+
+                    }
+
+                    if (cont >= 0) {
+                        RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosSanJose where idPedido='" + orderNumber + "'");
+                        try {
+                            while (RESULT.next()) {
+                                consultName.setText((RESULT.getString(6)));
+                                consultDate.setText(RESULT.getString(2));
+                                consultStatus.setText(RESULT.getString(3));
+                                
+                            }
+                        } catch (SQLException e) {
+                        }
+                        RESULT = Connections.ConnectionSQL.createConsult("Select precio,cantidad from medicamento,medicamentoPedidoCartago,pedidosCartago where pedidosCartago.idPedido='" 
+                                + orderNumber + "' and medicamentoPedidoCartago.idPedido= pedidosCartago.idPedido and medicamento.idMedicamento = medicamentoPedidoCartago.idMedicamento");
+                        try {
+                            while (RESULT.next()) {
+                                int precioConsulta = (Integer.parseInt(RESULT.getString(2)))*(Integer.parseInt(RESULT.getString(1)));
+                                consultPrice.setText(Integer.toString(precioConsulta));
+                            }
+                        } catch (SQLException e) {
+                        }
+                    
+
+                    }
+                }catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "No existe la orden, revise el dato ingresado", "Error", JOptionPane.PLAIN_MESSAGE);
+            }}catch (ClassNotFoundException ex) {
+                Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }}
+            if (logInProvince ==4){
+            try{
+            orderNumber = Integer.parseInt(consultOrderNumber.getText());
+            RESULT = Connections.ConnectionSQL.createConsult("Select count(idPedido) from pedidosHeredia where idPedido='" + orderNumber + "'");
+           
+                try {
+
+                    while (RESULT.next()) {
+                        cont = RESULT.getInt(1);
+
+                    }
+
+                    if (cont >= 0) {
+                        RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosHeredia where idPedido='" + orderNumber + "'");
+                        try {
+                            while (RESULT.next()) {
+                                consultName.setText((RESULT.getString(6)));
+                                consultDate.setText(RESULT.getString(2));
+                                consultStatus.setText(RESULT.getString(3));
+                                
+                            }
+                        } catch (SQLException e) {
+                        }
+                        RESULT = Connections.ConnectionSQL.createConsult("Select precio,cantidad from medicamento,medicamentoPedidoCartago,pedidosCartago where pedidosCartago.idPedido='" 
+                                + orderNumber + "' and medicamentoPedidoCartago.idPedido= pedidosCartago.idPedido and medicamento.idMedicamento = medicamentoPedidoCartago.idMedicamento");
+                        try {
+                            while (RESULT.next()) {
+                                int precioConsulta = (Integer.parseInt(RESULT.getString(2)))*(Integer.parseInt(RESULT.getString(1)));
+                                consultPrice.setText(Integer.toString(precioConsulta));
+                            }
+                        } catch (SQLException e) {
+                        }
+                    
+
+            }
+                }catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "No existe la orden, revise el dato ingresado", "Error", JOptionPane.PLAIN_MESSAGE);
+            }    
+            }catch (ClassNotFoundException ex) {
+                Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }}
+            else if(logInProvince ==4){
+            try{
+            orderNumber = Integer.parseInt(consultOrderNumber.getText());
+            RESULT = Connections.ConnectionSQL.createConsult("Select count(idPedido) from pedidosCartago where idPedido='" + orderNumber + "'");
+           
+                try {
+
+                    while (RESULT.next()) {
+                        cont = RESULT.getInt(1);
+
+                    }
+
+                    if (cont >= 0) {
+                        RESULT = Connections.ConnectionSQL.createConsult("Select * from pedidosCartago where idPedido='" + orderNumber + "'");
+                        try {
+                            while (RESULT.next()) {
+                                consultName.setText((RESULT.getString(6)));
+                                consultDate.setText(RESULT.getString(2));
+                                consultStatus.setText(RESULT.getString(3));
+                                
+                            }
+                        } catch (SQLException e) {
+                        }
+                        RESULT = Connections.ConnectionSQL.createConsult("Select precio,cantidad from medicamento,medicamentoPedidoCartago,pedidosCartago where pedidosCartago.idPedido='" 
+                                + orderNumber + "' and medicamentoPedidoCartago.idPedido= pedidosCartago.idPedido and medicamento.idMedicamento = medicamentoPedidoCartago.idMedicamento");
+                        try {
+                            while (RESULT.next()) {
+                                int precioConsulta = (Integer.parseInt(RESULT.getString(2)))*(Integer.parseInt(RESULT.getString(1)));
+                                consultPrice.setText(Integer.toString(precioConsulta));
+                            }
+                        } catch (SQLException e) {
+                        }
+                    
+
+            }
+                }catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "No existe la orden, revise el dato ingresado", "Error", JOptionPane.PLAIN_MESSAGE);
+            }        
+            }catch (ClassNotFoundException ex) {
+                Logger.getLogger(ConsultOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+               
+        
+        }}
+                
+        
+            
+        
+
+           
+
+    }//GEN-LAST:event_consultOrderButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConsultOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConsultOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConsultOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConsultOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ConsultOrder().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel consultDate;
-    private javax.swing.JLabel consultEmployee;
     private javax.swing.JLabel consultName;
-    private javax.swing.JLabel consultNumber;
     private javax.swing.JButton consultOrderBack;
     private javax.swing.JButton consultOrderButton;
-    private javax.swing.JTextField consultOrderIDClient;
     private javax.swing.JTextField consultOrderNumber;
-    private javax.swing.JLabel consultPlace;
     private javax.swing.JLabel consultPrice;
     private javax.swing.JLabel consultStatus;
-    private javax.swing.JLabel consultType;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }
