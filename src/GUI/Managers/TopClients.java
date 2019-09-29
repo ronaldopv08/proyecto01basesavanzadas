@@ -31,7 +31,7 @@ public class TopClients extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void loadDataClients(String initialDate, String finalDate) throws SQLException {
+    public void loadDataClients(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
         DefaultTableModel clients = (DefaultTableModel) bestClientsTable.getModel();
         clients.setRowCount(0);
         resultFromQuery = AddDataProcedures.bestClients(initialDate, finalDate);
@@ -83,17 +83,11 @@ public class TopClients extends javax.swing.JFrame {
 
         jLabel3.setText("Date 02:");
 
-        yearInitial.setText("jTextField1");
-
-        monthInitial.setText("jTextField2");
-
-        yearFinal.setText("jTextField3");
-
-        monthFinal.setText("jTextField4");
-
-        dayInitial.setText("jTextField5");
-
-        dayFinal.setText("jTextField6");
+        monthInitial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                monthInitialActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Year");
 
@@ -109,29 +103,29 @@ public class TopClients extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(yearInitial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(yearInitial))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(yearFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(yearFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(monthInitial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(monthFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dayFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dayInitial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(monthFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                            .addComponent(monthInitial))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(dayFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                            .addComponent(dayInitial)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(78, 78, 78)
                         .addComponent(jLabel4)
                         .addGap(47, 47, 47)
                         .addComponent(jLabel5)
-                        .addGap(74, 74, 74)
+                        .addGap(36, 36, 36)
                         .addComponent(jLabel6)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -249,12 +243,20 @@ public class TopClients extends javax.swing.JFrame {
             try {
                 String initialDate = yearInitial.getText() + "-" + monthInitial.getText() + "-" + dayInitial.getText();
                 String finalDate = yearFinal.getText() + "-" + monthFinal.getText() + "-" + dayFinal.getText();
-                loadDataClients(initialDate, finalDate);
+                try {
+                    loadDataClients(initialDate, finalDate);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(TopClients.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 JOptionPane.showMessageDialog(this, "Best 3 clients in the bussiness!");
             }catch (SQLException e) {
         } 
         }
     }//GEN-LAST:event_consultTopClientsActionPerformed
+
+    private void monthInitialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_monthInitialActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_monthInitialActionPerformed
 
     /**
      * @param args the command line arguments
