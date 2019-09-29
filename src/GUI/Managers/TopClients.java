@@ -34,7 +34,7 @@ public class TopClients extends javax.swing.JFrame {
     public void loadDataClients(String initialDate, String finalDate) throws SQLException {
         DefaultTableModel clients = (DefaultTableModel) bestClientsTable.getModel();
         clients.setRowCount(0);
-        resultFromQuery = AddDataProcedures.consultTopClients(initialDate, finalDate);
+        resultFromQuery = AddDataProcedures.bestClients(initialDate, finalDate);
         try {
             while (resultFromQuery.next()) {
                 Vector dataClient = new Vector();

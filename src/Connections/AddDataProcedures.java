@@ -171,13 +171,9 @@ public class AddDataProcedures {
     }
     
     //Procedure Three
-    public static void consultTopClients(String initialDate, String finalDate)
-       throws SQLException, ClassNotFoundException {
-       CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call mejoresTresClientes(?,?)}");
-       entry.setString(1, initialDate);
-       entry.setString(2, finalDate);
-       entry.execute();    
+    public static ResultSet bestClients(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
+        resultFromQuery=ConnectionSQL.createConsult("exec mejoresTresClientes "+initialDate+","+finalDate+";");
+        return resultFromQuery;
     }
     
 }
