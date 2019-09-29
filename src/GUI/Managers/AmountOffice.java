@@ -5,6 +5,15 @@
  */
 package GUI.Managers;
 
+import Connections.AddDataProcedures;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ronal
@@ -16,6 +25,42 @@ public class AmountOffice extends javax.swing.JFrame {
      */
     public AmountOffice() {
         initComponents();
+    }
+    private ResultSet resultFromQuery;
+    private int count;
+    
+    public void loadDataOffices(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
+        DefaultTableModel amountsHeredia = (DefaultTableModel) amountOfficeTable.getModel();
+        amountsHeredia.setRowCount(0);
+        
+        DefaultTableModel amountsCartago = (DefaultTableModel) amountOfficeTable.getModel();
+        amountsCartago.setRowCount(0);
+        
+        DefaultTableModel amountsSanJose = (DefaultTableModel) amountOfficeTable.getModel();
+        amountsSanJose.setRowCount(0);
+        try {
+            resultFromQuery = AddDataProcedures.consultAmountOfficeHeredia(initialDate, finalDate);
+            Vector dataOfficeAmountHeredia = new Vector();
+            dataOfficeAmountHeredia.add("Heredia");
+            dataOfficeAmountHeredia.add(resultFromQuery.getInt(1));
+            amountsHeredia.addRow(dataOfficeAmountHeredia);
+            amountOfficeTable.setModel(amountsHeredia);
+            
+            resultFromQuery = AddDataProcedures.consultAmountOfficeCartago(initialDate, finalDate);
+            Vector dataOfficeAmountCartago = new Vector();
+            dataOfficeAmountCartago.add("Cartago");
+            dataOfficeAmountCartago.add(resultFromQuery.getInt(1));
+            amountsCartago.addRow(dataOfficeAmountCartago);
+            amountOfficeTable.setModel(amountsCartago);
+            
+            resultFromQuery = AddDataProcedures.consultAmountOfficeSanJose(initialDate, finalDate);
+            Vector dataOfficeAmountSanJose = new Vector();
+            dataOfficeAmountSanJose.add("San Jose");
+            dataOfficeAmountSanJose.add(resultFromQuery.getInt(1));
+            amountsSanJose.addRow(dataOfficeAmountSanJose);
+            amountOfficeTable.setModel(amountsSanJose);
+        } catch (SQLException e) {
+        }
     }
 
     /**
@@ -99,32 +144,32 @@ public class AmountOffice extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(amountOfficeBack))
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel5)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(initialMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(2, 2, 2)))
+                                    .addComponent(finalMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(53, 53, 53)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(initialDay, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(51, 51, 51)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(jLabel5)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                    .addComponent(initialMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGap(2, 2, 2)))
-                                            .addComponent(finalMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(53, 53, 53)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(initialDay, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(13, 13, 13)
-                                                .addComponent(jLabel6))
-                                            .addComponent(finalDay, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE))))))
+                                        .addGap(13, 13, 13)
+                                        .addComponent(jLabel6))
+                                    .addComponent(finalDay, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addContainerGap())))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(11, 11, 11)
+                .addGap(55, 55, 55)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
@@ -164,8 +209,16 @@ public class AmountOffice extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(amountOfficeTable);
+        if (amountOfficeTable.getColumnModel().getColumnCount() > 0) {
+            amountOfficeTable.getColumnModel().getColumn(1).setHeaderValue("Amount");
+        }
 
         amountOfficeConsult.setText("Consult");
+        amountOfficeConsult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                amountOfficeConsultActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -174,21 +227,23 @@ public class AmountOffice extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(amountOfficeConsult))
+                .addContainerGap(86, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(amountOfficeConsult))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(amountOfficeConsult)
                 .addGap(17, 17, 17)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -210,6 +265,28 @@ public class AmountOffice extends javax.swing.JFrame {
     private void initialYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_initialYearActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_initialYearActionPerformed
+
+    private void amountOfficeConsultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountOfficeConsultActionPerformed
+ 
+        if (initialYear.getText().isEmpty() || initialMonth.getText().isEmpty() || initialDay.getText().isEmpty()
+                || finalYear.getText().isEmpty() || finalMonth.getText().isEmpty() || finalDay.getText().isEmpty())
+               {
+            
+            JOptionPane.showMessageDialog(this, "Complete all the fields please");
+        } else {
+            try {
+                String initialDate = initialYear.getText() + "-" + initialMonth.getText() + "-" + initialDay.getText();
+                String finalDate = finalYear.getText() + "-" + finalMonth.getText() + "-" + finalDay.getText();
+                try {
+                    loadDataOffices(initialDate, finalDate);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(TopClients.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                JOptionPane.showMessageDialog(this, "Best 3 clients in the bussiness!");
+            }catch (SQLException e) {
+        } 
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_amountOfficeConsultActionPerformed
 
     /**
      * @param args the command line arguments
