@@ -231,7 +231,8 @@ public class signIn extends javax.swing.JFrame {
             }
         }
         
-        if ("Employee".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){ 
+        if ("Employee".equals(comboBoxUserType.getItemAt(comboBoxUserType.getSelectedIndex()))){
+            int idEmployee=0;
             try {
                 resultFromQuery = Connections.AddDataProcedures.verifiedEmployee(typedUserName, typedPasswordS,"1");
                 try{
@@ -242,6 +243,11 @@ public class signIn extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, e, "Advice", JOptionPane.INFORMATION_MESSAGE);
                 }
                 if (count >= 1){
+                    resultFromQuery=ConnectionSQL.createConsult("select A.cedula from empleadosTotales A where A.usuario='"+typedUserName+"' and A.contraseña='"+typedPasswordS+"';");
+                    while(resultFromQuery.next()){
+                        idEmployee = resultFromQuery.getInt(1);
+                        LoginProvince.setEmployee(idEmployee);
+                    }
                     JOptionPane.showMessageDialog(this, "Successful logging!", "Advice", JOptionPane.INFORMATION_MESSAGE);
                     EmployeeModule employeeAccess = new EmployeeModule();
                     employeeAccess.setVisible(true);

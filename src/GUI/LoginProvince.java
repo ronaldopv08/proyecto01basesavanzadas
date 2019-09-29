@@ -11,7 +11,12 @@ package GUI;
  */
 public class LoginProvince {
     public static int logInProvince;
+    public static int idEmployee;
+    
     public static void setProvince(int provinceID){
         logInProvince=provinceID;
+    }
+    public static void setEmployee(int employeeID){
+        idEmployee=employeeID;
     }
 }

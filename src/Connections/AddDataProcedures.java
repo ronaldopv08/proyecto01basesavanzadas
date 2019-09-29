@@ -131,62 +131,47 @@ public class AddDataProcedures {
     
 //Methods to call procedure associated with Manager consults
     //Procedure one
-    public static void consultAmountOfficeHeredia(String initialDate, String finalDate)
-       throws SQLException, ClassNotFoundException {
-       CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaMontoGerentePeriodoHeredia(?,?)}");
-       entry.setString(1, initialDate);
-       entry.setString(2, finalDate);
-       entry.execute();    
+    public static ResultSet consultAmountOfficeHeredia(String initialDate, String finalDate) 
+        throws SQLException, ClassNotFoundException {
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaMontoGerentePeriodoHeredia '"+initialDate+"','"+finalDate+"';");
+        return resultFromQuery;
     }
-    public static void consultAmountOfficeCartago(String initialDate, String finalDate)
-       throws SQLException, ClassNotFoundException {
-       CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaMontoGerentePeriodoCartago(?,?)}");
-       entry.setString(1, initialDate);
-       entry.setString(2, finalDate);
-       entry.execute();    
+    
+    public static ResultSet consultAmountOfficeCartago(String initialDate, String finalDate) 
+        throws SQLException, ClassNotFoundException {
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaMontoGerentePeriodoCartago '"+initialDate+"','"+finalDate+"';");
+        return resultFromQuery;
     }
-    public static void consultAmountOfficeSanJose(String initialDate, String finalDate)
-       throws SQLException, ClassNotFoundException {
-       CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaMontoGerentePeriodoSanJose(?,?)}");
-       entry.setString(1, initialDate);
-       entry.setString(2, finalDate);
-       entry.execute();    
+    
+    public static ResultSet consultAmountOfficeSanJose(String initialDate, String finalDate) 
+        throws SQLException, ClassNotFoundException {
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaMontoGerentePeriodoSanJose '"+initialDate+"','"+finalDate+"';");
+        return resultFromQuery;
     }
-    //Procedure two
-    public static void consultAmountOfficeTypeOrderHeredia(String initialDate, String finalDate, int orderType)
-       throws SQLException, ClassNotFoundException {
-       CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaGerenteMontoSucursalTipoPedidoHeredia(?,?,?)}");
-       entry.setString(1, initialDate);
-       entry.setString(2, finalDate);
-       entry.setInt(3, orderType);
-       entry.execute();    
+    
+    //Procedure two   
+        public static ResultSet consultAmountOfficeTypeOrderHeredia(String initialDate, String finalDate, int orderType) 
+        throws SQLException, ClassNotFoundException {
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaGerenteMontoSucursalTipoPedidoHeredia '"+initialDate+"','"+finalDate+"','"+orderType+"';");
+        return resultFromQuery;
     }
-    public static void consultAmountOfficeTypeOrderCartago(String initialDate, String finalDate, int orderType)
-       throws SQLException, ClassNotFoundException {
-       CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaGerenteMontoSucursalTipoPedidoCartago(?,?,?)}");
-       entry.setString(1, initialDate);
-       entry.setString(2, finalDate);
-       entry.setInt(3, orderType);
-       entry.execute();    
+        
+        public static ResultSet consultAmountOfficeTypeOrderSanJose(String initialDate, String finalDate, int orderType) 
+        throws SQLException, ClassNotFoundException {
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaGerenteMontoSucursalTipoPedidoSanJose '"+initialDate+"','"+finalDate+"','"+orderType+"';");
+        return resultFromQuery;
     }
-    public static void consultAmountOfficeTypeOrderSanJose(String initialDate, String finalDate, int orderType)
-       throws SQLException, ClassNotFoundException {
-       CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaGerenteMontoSucursalTipoPedidoSanJose(?,?,?)}");
-       entry.setString(1, initialDate);
-       entry.setString(2, finalDate);
-       entry.setInt(3, orderType);
-       entry.execute();    
+        
+        public static ResultSet consultAmountOfficeTypeOrderCartago(String initialDate, String finalDate, int orderType) 
+        throws SQLException, ClassNotFoundException {
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaGerenteMontoSucursalTipoPedidoCartago '"+initialDate+"','"+finalDate+"','"+orderType+"';");
+        return resultFromQuery;
     }
+        
     
     //Procedure Three
     public static ResultSet bestClients(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
-        resultFromQuery=ConnectionSQL.createConsult("exec mejoresTresClientes "+initialDate+","+finalDate+";");
+        resultFromQuery=ConnectionSQL.createConsult("exec mejoresTresClientes '"+initialDate+"','"+finalDate+"';");
         return resultFromQuery;
     }
     
