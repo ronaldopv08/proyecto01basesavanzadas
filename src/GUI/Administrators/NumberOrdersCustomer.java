@@ -83,7 +83,7 @@ resultFromQuery = ConnectionSQL.createConsult("select pedidoHeredia.idPedido, "
         amountsCartago.setRowCount(0);
 
         try {
-            resultFromQuery = AddDataProcedures.consultAdministratorQuantityOrdersHerediaDrugStore(initialDate, finalDate);
+            resultFromQuery = AddDataProcedures.consultAdministratorQuantityOrdersCartagoDrugStore(initialDate, finalDate);
             Vector dataOfficeAmountCartago = new Vector();
             while (resultFromQuery.next()) {
                 dataOfficeAmountCartago.add(resultFromQuery.getInt(1));
@@ -129,7 +129,7 @@ resultFromQuery = ConnectionSQL.createConsult("select pedidoCartago.idPedido, "
         amountsSanJose.setRowCount(0);
 
         try {
-            resultFromQuery = AddDataProcedures.consultAdministratorQuantityOrdersHerediaDrugStore(initialDate, finalDate);
+            resultFromQuery = AddDataProcedures.consultAdministratorQuantityOrdersSanJoseDrugStore(initialDate, finalDate);
             Vector dataOfficeAmountSanJose = new Vector();
             while (resultFromQuery.next()) {
                 dataOfficeAmountSanJose.add(resultFromQuery.getInt(1));
@@ -305,36 +305,42 @@ resultFromQuery = ConnectionSQL.createConsult("select pedidoSanJose.idPedido, "
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(finalYear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(initialYear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(52, 52, 52)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(initialMonth)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(finalMonth, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(26, 26, 26)
+                                        .addComponent(jLabel6))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(initialYear, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(finalYear)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(initialDay, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel8))
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(finalMonth)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(initialMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel1)
                                                 .addGap(18, 18, 18))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(finalDay, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(consult, javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(back, javax.swing.GroupLayout.Alignment.TRAILING))))))))
+                                            .addComponent(consult, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(back, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(17, 17, 17)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel8)
+                                            .addComponent(initialDay, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(finalDay, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -425,7 +431,7 @@ resultFromQuery = ConnectionSQL.createConsult("select pedidoSanJose.idPedido, "
                  
             } catch (SQLException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "Validate the data");
-                Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(NumberOrdersCustomer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (LoginProvince.logInProvince == 3) {
@@ -434,7 +440,7 @@ resultFromQuery = ConnectionSQL.createConsult("select pedidoSanJose.idPedido, "
                 getOrdersCartago(initialDate,finalDate);
             } catch (SQLException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "Validate the data");
-                Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(NumberOrdersCustomer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if (LoginProvince.logInProvince == 4) {
@@ -443,7 +449,7 @@ resultFromQuery = ConnectionSQL.createConsult("select pedidoSanJose.idPedido, "
                 getOrdersHeredia(initialDate,finalDate);
             } catch (SQLException | ClassNotFoundException ex) {
                 JOptionPane.showMessageDialog(this, "Validate the data");
-                Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(NumberOrdersCustomer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
