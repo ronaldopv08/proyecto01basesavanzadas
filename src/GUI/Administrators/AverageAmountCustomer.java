@@ -5,6 +5,17 @@
  */
 package GUI.Administrators;
 
+import Connections.AddDataProcedures;
+import GUI.LoginProvince;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ronal
@@ -46,6 +57,11 @@ public class AverageAmountCustomer extends javax.swing.JFrame {
         jLabel3.setText("Date 02");
 
         consult.setText("Consult");
+        consult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultActionPerformed(evt);
+            }
+        });
 
         customersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -85,7 +101,7 @@ public class AverageAmountCustomer extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 1, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -94,11 +110,12 @@ public class AverageAmountCustomer extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(176, 176, 176)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(140, 140, 140)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
@@ -114,14 +131,14 @@ public class AverageAmountCustomer extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(33, 33, 33))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(consult)
-                        .addGap(12, 12, 12)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(back))
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(back)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel2)))
                 .addGap(25, 25, 25)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -149,6 +166,43 @@ public class AverageAmountCustomer extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void fillTableSanJose(String beginDate,String endDate) throws ClassNotFoundException, SQLException{
+        ResultSet result= AddDataProcedures.consultAverageAmountOrdersSanJose(beginDate, endDate);
+        while (result.next()){
+                    DefaultTableModel modelo = (DefaultTableModel) customersTable.getModel();                
+                    modelo.setRowCount(0);
+                    Vector v = new Vector();
+                    v.add(result.getString(1));
+                    v.add(result.getString(3));
+                    modelo.addRow(v);
+                    customersTable.setModel(modelo);
+        }
+    }
+    private void fillTableCartago(String beginDate,String endDate) throws ClassNotFoundException, SQLException{
+        ResultSet result= AddDataProcedures.consultAverageAmountOrdersCartago(beginDate, endDate);
+        while (result.next()){
+                    DefaultTableModel modelo = (DefaultTableModel) customersTable.getModel();                
+                    modelo.setRowCount(0);
+                    Vector v = new Vector();
+                    v.add(result.getString(1));
+                    v.add(result.getString(3));
+                    modelo.addRow(v);
+                    customersTable.setModel(modelo);
+        }
+    }
+    private void fillTableHeredia(String beginDate,String endDate) throws ClassNotFoundException, SQLException{
+        ResultSet result= AddDataProcedures.consultAverageAmountOrdersHeredia(beginDate, endDate);
+        while (result.next()){
+                    DefaultTableModel modelo = (DefaultTableModel) customersTable.getModel();                
+                    modelo.setRowCount(0);
+                    Vector v = new Vector();
+                    v.add(result.getString(1));
+                    v.add(result.getString(3));
+                    modelo.addRow(v);
+                    customersTable.setModel(modelo);
+        }
+    }
+    
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
         AdministratorModule administratorModule = new AdministratorModule();
@@ -157,6 +211,42 @@ public class AverageAmountCustomer extends javax.swing.JFrame {
         administratorModule.setDefaultCloseOperation(AdministratorModule.HIDE_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_backActionPerformed
+
+    private void consultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultActionPerformed
+        long beginDate = BeginDateChoosed.getDate().getTime();
+        long endDate = EndDateChoosed.getDate().getTime();
+        if (endDate < beginDate){
+            JOptionPane.showMessageDialog(this, "Please use valid date range.");
+        }
+        java.sql.Date sqlBeginDate = new java.sql.Date(BeginDateChoosed.getDate().getTime());
+        java.sql.Date sqlEndDate = new java.sql.Date(EndDateChoosed.getDate().getTime());
+        String sqlBeginDateString = String.valueOf(sqlBeginDate);
+        String sqlEndDateString = String.valueOf(sqlEndDate);
+        System.out.println(sqlBeginDateString);
+        System.out.println(sqlEndDateString);
+        
+        if (LoginProvince.logInProvince==1){
+            try {
+                fillTableSanJose(sqlBeginDateString, sqlEndDateString);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(AverageAmountCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (LoginProvince.logInProvince==3){
+            try {
+                fillTableCartago(sqlBeginDateString, sqlEndDateString);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(AverageAmountCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (LoginProvince.logInProvince==4){
+            try {
+                fillTableHeredia(sqlBeginDateString, sqlEndDateString);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(AverageAmountCustomer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_consultActionPerformed
 
     /**
      * @param args the command line arguments

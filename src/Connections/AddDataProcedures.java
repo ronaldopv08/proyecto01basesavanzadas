@@ -100,7 +100,7 @@ public class AddDataProcedures {
     //Procedure three  montoPedidoPorTipoYMesCartago(@mes int, @tipoPedido int)
     public static String consultAdministratorAmountPerTypeMonthSanJose(String month, String orderType)
        throws SQLException, ClassNotFoundException {
-        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosSanJose "+month+","+orderType);
+        ResultSet result = ConnectionSQL.createConsult("exec montoPedidoPorTipoYMesSanJose "+month+","+orderType);
         result.next();
         String amount = result.getString(1);
         if (amount==null){
@@ -110,7 +110,7 @@ public class AddDataProcedures {
     }
     public static String consultAdministratorAmountPerTypeMonthCartago(String month, String orderType)
        throws SQLException, ClassNotFoundException {
-        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosCartago "+month+","+orderType);
+        ResultSet result = ConnectionSQL.createConsult("exec montoPedidoPorTipoYMesCartago "+month+","+orderType);
         result.next();
         String amount = result.getString(1);
         if (amount==null){
@@ -120,7 +120,7 @@ public class AddDataProcedures {
     }
     public static String consultAdministratorAmountPerTypeMonthHeredia(String month, String orderType)
        throws SQLException, ClassNotFoundException {
-        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosHeredia "+month+","+orderType);
+        ResultSet result = ConnectionSQL.createConsult("exec montoPedidoPorTipoYMesHeredia "+month+","+orderType);
         result.next();
         String amount = result.getString(1);
         if (amount==null){
@@ -129,42 +129,56 @@ public class AddDataProcedures {
         return amount;
     }
     
+    public static ResultSet consultAverageAmountOrdersSanJose(String beginDate, String endDate) throws ClassNotFoundException{
+        ResultSet result = ConnectionSQL.createConsult("exec consultarMontoPedidosPromedioSanJose '"+beginDate+"','"+endDate+"';");
+        return result;
+    }
+    
+    public static ResultSet consultAverageAmountOrdersCartago(String beginDate, String endDate) throws ClassNotFoundException{
+        ResultSet result = ConnectionSQL.createConsult("exec consultarMontoPedidosPromedioCartago '"+beginDate+"','"+endDate+"';");
+        return result;
+    }
+
+    public static ResultSet consultAverageAmountOrdersHeredia(String beginDate, String endDate) throws ClassNotFoundException{
+        ResultSet result = ConnectionSQL.createConsult("exec consultarMontoPedidosPromedioHeredia '"+beginDate+"','"+endDate+"';");
+        return result;
+    }
 //Methods to call procedure associated with Manager consults
     //Procedure one
     public static ResultSet consultAmountOfficeHeredia(String initialDate, String finalDate) 
         throws SQLException, ClassNotFoundException {
-        resultFromQuery=ConnectionSQL.createConsult("exec consultaMontoGerentePeriodoHeredia "+initialDate+","+finalDate+";");
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaMontoGerentePeriodoHeredia '"+initialDate+"','"+finalDate+"';");
         return resultFromQuery;
     }
     
     public static ResultSet consultAmountOfficeCartago(String initialDate, String finalDate) 
         throws SQLException, ClassNotFoundException {
-        resultFromQuery=ConnectionSQL.createConsult("exec consultaMontoGerentePeriodoCartago "+initialDate+","+finalDate+";");
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaMontoGerentePeriodoCartago '"+initialDate+"','"+finalDate+"';");
         return resultFromQuery;
     }
     
     public static ResultSet consultAmountOfficeSanJose(String initialDate, String finalDate) 
         throws SQLException, ClassNotFoundException {
-        resultFromQuery=ConnectionSQL.createConsult("exec consultaMontoGerentePeriodoSanJose "+initialDate+","+finalDate+";");
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaMontoGerentePeriodoSanJose '"+initialDate+"','"+finalDate+"';");
         return resultFromQuery;
     }
     
     //Procedure two   
         public static ResultSet consultAmountOfficeTypeOrderHeredia(String initialDate, String finalDate, int orderType) 
         throws SQLException, ClassNotFoundException {
-        resultFromQuery=ConnectionSQL.createConsult("exec consultaGerenteMontoSucursalTipoPedidoHeredia "+initialDate+","+initialDate+","+orderType+";");
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaGerenteMontoSucursalTipoPedidoHeredia '"+initialDate+"','"+finalDate+"','"+orderType+"';");
         return resultFromQuery;
     }
         
         public static ResultSet consultAmountOfficeTypeOrderSanJose(String initialDate, String finalDate, int orderType) 
         throws SQLException, ClassNotFoundException {
-        resultFromQuery=ConnectionSQL.createConsult("exec consultaGerenteMontoSucursalTipoPedidoSanJose "+initialDate+","+initialDate+","+orderType+";");
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaGerenteMontoSucursalTipoPedidoSanJose '"+initialDate+"','"+finalDate+"','"+orderType+"';");
         return resultFromQuery;
     }
         
         public static ResultSet consultAmountOfficeTypeOrderCartago(String initialDate, String finalDate, int orderType) 
         throws SQLException, ClassNotFoundException {
-        resultFromQuery=ConnectionSQL.createConsult("exec consultaGerenteMontoSucursalTipoPedidoCartago "+initialDate+","+initialDate+","+orderType+";");
+        resultFromQuery=ConnectionSQL.createConsult("exec consultaGerenteMontoSucursalTipoPedidoCartago '"+initialDate+"','"+finalDate+"','"+orderType+"';");
         return resultFromQuery;
     }
         
