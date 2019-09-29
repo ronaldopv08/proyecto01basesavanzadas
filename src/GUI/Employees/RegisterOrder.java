@@ -5,8 +5,31 @@
  */
 package GUI.Employees;
 
+import Connections.*;
+import java.awt.Component;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Vector;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import GUI.LoginProvince;
+import static GUI.LoginProvince.idEmployee;
+import static GUI.LoginProvince.logInProvince;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,15 +37,16 @@ import java.util.Date;
  */
 public class RegisterOrder extends javax.swing.JFrame {
     
-    static Date date = new Date();
-    final SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    static ResultSet res;
+    
 
     /**
      * Creates new form RegisterOrder
      */
-    public RegisterOrder() {
+    public RegisterOrder() throws ClassNotFoundException, IOException  {
         initComponents();
-        registerOrderDate.setText(format.format(date));
+        loadMedicinesTable();
+        
     }
 
     /**
@@ -38,10 +62,6 @@ public class RegisterOrder extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         registerOrderIDClient = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        registerOrderDate = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        registerOrderStatus = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         registerOrderType = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -53,20 +73,13 @@ public class RegisterOrder extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         registerOrderPrice = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Register Order");
 
         jLabel2.setText("Client:");
-
-        jLabel3.setText("Date:");
-
-        registerOrderDate.setText("jLabel4");
-
-        jLabel4.setText("Status:");
-
-        registerOrderStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel5.setText("Type:");
 
@@ -80,14 +93,14 @@ public class RegisterOrder extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Medicine", "Image", "Price", "Check", "Unities"
+                "Identifier", "Medicine", "Image", "Price", "Unities"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                true, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -129,6 +142,13 @@ public class RegisterOrder extends javax.swing.JFrame {
 
         registerOrderPrice.setText("0");
 
+        jButton4.setText("Add Medicine to Order");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -140,34 +160,33 @@ public class RegisterOrder extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(47, 47, 47)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(47, 47, 47)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(registerOrderPlace, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(registerOrderType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(registerOrderIDClient, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(registerOrderDate)
-                            .addComponent(registerOrderIDClient)
-                            .addComponent(registerOrderStatus, 0, 118, Short.MAX_VALUE)
-                            .addComponent(registerOrderType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(registerOrderPlace, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jButton1))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel7)
-                        .addGap(49, 49, 49)
+                        .addGap(45, 45, 45)
                         .addComponent(registerOrderPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
+                        .addContainerGap()
+                        .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -179,62 +198,143 @@ public class RegisterOrder extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(registerOrderIDClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(registerOrderDate))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(registerOrderStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(registerOrderType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(registerOrderType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(26, 26, 26)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(registerOrderPlace, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(registerOrderPrice))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(registerOrderPrice))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public void loadMedicinesTable() throws ClassNotFoundException, IOException{
+        registerOrderMedicines.getColumn("Image").setCellRenderer(new LabelRenderer()); 
+        DefaultTableModel model = (DefaultTableModel) registerOrderMedicines.getModel();
+        model.setRowCount(0);
+        res=ConnectionSQL.createConsult("select * from medicamento;");
+        try{
+            while(res.next()){
+                byte[] fotografiaVehiculo = res.getBytes(4);
+                ByteArrayInputStream bis = new ByteArrayInputStream(fotografiaVehiculo);
+                BufferedImage bImage2 = ImageIO.read(bis);
+                Image foto = bImage2.getScaledInstance(210, 150, Image.SCALE_DEFAULT);
+                ImageIcon fotoIcon = new ImageIcon(foto);
+                JButton botonImagen = new JButton();
+                botonImagen.setIcon(fotoIcon);
+                Vector v = new Vector();
+                v.add(res.getString(1));
+                v.add(res.getString(2));
+                v.add(botonImagen);
+                v.add(res.getString(5));
+                model.addRow(v);
+                registerOrderMedicines.setModel(model);
+            }
+        }catch(SQLException e){
+    }
+    }
+    public class LabelRenderer implements TableCellRenderer{
+        @Override
+        public Component getTableCellRendererComponent(JTable table,Object value,boolean isSelected,boolean hasFocus, int row, int column){
+            TableColumn tc = registerOrderMedicines.getColumn("Image");
+            tc.setMinWidth(210);
+            table.setRowHeight(150);
+            return (Component) value;
+        }
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        LoginProvince datosProvincia= new LoginProvince();
+        if (registerOrderIDClient.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Ingrese todos los datos correspondientes", "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            int orderClientID= Integer.parseInt(registerOrderIDClient.getText());
+            int orderType= Integer.parseInt(registerOrderType.getSelectedItem().toString());
+            String sucursal= registerOrderPlace.getSelectedItem().toString();
+            
+                if (logInProvince == 1){
+                try {
+                    AddDataProcedures.registerOrderSanJose(orderType, idEmployee , orderClientID );
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+                if (logInProvince == 4){
+                try {
+                    AddDataProcedures.registerOrderHeredia(orderType, idEmployee , orderClientID);
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+                else{
+                try { 
+                    AddDataProcedures.registerOrderCartago(orderType, idEmployee , orderClientID);
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+                 
+                   
+                JOptionPane.showMessageDialog(this, "Los datos han sido guardados correctamente");
+            
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        int row = registerOrderMedicines.getSelectedRow();
+
+        int price = Integer.parseInt(registerOrderMedicines.getValueAt(row, 3).toString());
+        int amount = Integer.parseInt(registerOrderMedicines.getValueAt(row, 4).toString());
+        registerOrderPrice.setText(Integer.toString(amount*price));
+        
+        
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -246,60 +346,65 @@ public class RegisterOrder extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int row = registerOrderMedicines.getSelectedRow();
+        int idMedicineOrder= Integer.parseInt(registerOrderMedicines.getValueAt(row, 0).toString());
+        int medicineUnities= Integer.parseInt(registerOrderMedicines.getValueAt(row, 4).toString());
+        if (logInProvince == 1){
+                try {
+                    AddDataProcedures.registerMedicineOrderSanJose(idMedicineOrder , medicineUnities );
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+                if (logInProvince == 4){
+                try {
+                    AddDataProcedures.registerMedicineOrderHeredia(idMedicineOrder , medicineUnities );
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+                else{
+                try { 
+                    AddDataProcedures.registerMedicineOrderCartago(idMedicineOrder , medicineUnities );
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(RegisterOrder.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                }
+                 
+                   
+                JOptionPane.showMessageDialog(this, "Los datos han sido guardados correctamente");
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegisterOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegisterOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegisterOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegisterOrder.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RegisterOrder().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel registerOrderDate;
     private javax.swing.JTextField registerOrderIDClient;
     private javax.swing.JTable registerOrderMedicines;
     private javax.swing.JComboBox<String> registerOrderPlace;
     private javax.swing.JLabel registerOrderPrice;
-    private javax.swing.JComboBox<String> registerOrderStatus;
     private javax.swing.JComboBox<String> registerOrderType;
     // End of variables declaration//GEN-END:variables
 }

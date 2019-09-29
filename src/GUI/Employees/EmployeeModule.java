@@ -6,6 +6,8 @@
 package GUI.Employees;
 
 import GUI.signIn;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,7 +34,6 @@ public class EmployeeModule extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         employeeModuleRegisterOrder = new javax.swing.JButton();
-        employeeModuleRegisterClient = new javax.swing.JButton();
         employeeModuleConsultOrder = new javax.swing.JButton();
         employeeModuleBack = new javax.swing.JButton();
 
@@ -45,13 +46,6 @@ public class EmployeeModule extends javax.swing.JFrame {
         employeeModuleRegisterOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 employeeModuleRegisterOrderActionPerformed(evt);
-            }
-        });
-
-        employeeModuleRegisterClient.setText("Register Client");
-        employeeModuleRegisterClient.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                employeeModuleRegisterClientActionPerformed(evt);
             }
         });
 
@@ -77,9 +71,9 @@ public class EmployeeModule extends javax.swing.JFrame {
                 .addContainerGap(130, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(employeeModuleRegisterOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(employeeModuleConsultOrder)
-                        .addComponent(employeeModuleRegisterClient))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(employeeModuleConsultOrder))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(140, 140, 140))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -96,9 +90,7 @@ public class EmployeeModule extends javax.swing.JFrame {
                 .addComponent(employeeModuleRegisterOrder)
                 .addGap(30, 30, 30)
                 .addComponent(employeeModuleConsultOrder)
-                .addGap(18, 18, 18)
-                .addComponent(employeeModuleRegisterClient)
-                .addGap(31, 31, 31)
+                .addGap(72, 72, 72)
                 .addComponent(employeeModuleBack)
                 .addContainerGap(40, Short.MAX_VALUE))
         );
@@ -123,21 +115,16 @@ public class EmployeeModule extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void employeeModuleRegisterOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeModuleRegisterOrderActionPerformed
-        RegisterOrder registerOrder = new RegisterOrder();
-        registerOrder.setVisible(true);
-        registerOrder.setLocationRelativeTo(null);
-        registerOrder.setDefaultCloseOperation(RegisterOrder.HIDE_ON_CLOSE);
-        this.dispose();
+        try {
+            RegisterOrder registerOrder = new RegisterOrder();
+            registerOrder.setVisible(true);
+            registerOrder.setLocationRelativeTo(null);
+            registerOrder.setDefaultCloseOperation(RegisterOrder.HIDE_ON_CLOSE);
+            this.dispose();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EmployeeModule.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_employeeModuleRegisterOrderActionPerformed
-
-    private void employeeModuleRegisterClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeModuleRegisterClientActionPerformed
-        // TODO add your handling code here:
-        RegisterClient registerClient = new RegisterClient();
-        registerClient.setVisible(true);
-        registerClient.setLocationRelativeTo(null);
-        registerClient.setDefaultCloseOperation(RegisterClient.HIDE_ON_CLOSE);
-        this.dispose();
-    }//GEN-LAST:event_employeeModuleRegisterClientActionPerformed
 
     private void employeeModuleConsultOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeModuleConsultOrderActionPerformed
         // TODO add your handling code here:
@@ -184,6 +171,8 @@ public class EmployeeModule extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -196,7 +185,6 @@ public class EmployeeModule extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton employeeModuleBack;
     private javax.swing.JButton employeeModuleConsultOrder;
-    private javax.swing.JButton employeeModuleRegisterClient;
     private javax.swing.JButton employeeModuleRegisterOrder;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
