@@ -98,21 +98,35 @@ public class AddDataProcedures {
     }
     
     //Procedure three  montoPedidoPorTipoYMesCartago(@mes int, @tipoPedido int)
-    public static void consultAdministratorAmountPerTypeMonthSanJose(int month, int orderType)
+    public static String consultAdministratorAmountPerTypeMonthSanJose(String month, String orderType)
        throws SQLException, ClassNotFoundException {
-       CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaAdministradorCantidadPedidosSanJose(?,?)}");
-       entry.setInt(1, month);
-       entry.setInt(2, orderType);
-       entry.execute();    
+        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosSanJose "+month+","+orderType);
+        result.next();
+        String amount = result.getString(1);
+        if (amount==null){
+            return "0";
+        }
+        return amount;
     }
-    public static void consultAdministratorAmountPerTypeMonthCartago(int month, int orderType)
+    public static String consultAdministratorAmountPerTypeMonthCartago(String month, String orderType)
        throws SQLException, ClassNotFoundException {
-       CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaAdministradorCantidadPedidosCartago(?,?)}");
-       entry.setInt(1, month);
-       entry.setInt(2, orderType);
-       entry.execute();    
+        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosCartago "+month+","+orderType);
+        result.next();
+        String amount = result.getString(1);
+        if (amount==null){
+            return "0";
+        }
+        return amount;
+    }
+    public static String consultAdministratorAmountPerTypeMonthHeredia(String month, String orderType)
+       throws SQLException, ClassNotFoundException {
+        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorCantidadPedidosHeredia "+month+","+orderType);
+        result.next();
+        String amount = result.getString(1);
+        if (amount==null){
+            return "0";
+        }
+        return amount;
     }
     
 //Methods to call procedure associated with Manager consults

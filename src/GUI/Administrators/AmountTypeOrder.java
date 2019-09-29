@@ -47,6 +47,11 @@ public class AmountTypeOrder extends javax.swing.JFrame {
         jLabel3.setText("Type:");
 
         consult.setText("Consult");
+        consult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Total Amount:");
 
@@ -149,6 +154,10 @@ public class AmountTypeOrder extends javax.swing.JFrame {
         administratorModule.setDefaultCloseOperation(AdministratorModule.HIDE_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_backActionPerformed
+
+    private void consultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultActionPerformed
+        
+    }//GEN-LAST:event_consultActionPerformed
 
     /**
      * @param args the command line arguments
