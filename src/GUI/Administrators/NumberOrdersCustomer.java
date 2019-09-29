@@ -5,6 +5,16 @@
  */
 package GUI.Administrators;
 
+import Connections.AddDataProcedures;
+import GUI.LoginProvince;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ronal
@@ -14,8 +24,26 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
     /**
      * Creates new form NumberOrdersCustomer
      */
+    private ResultSet resultFromQuery;
+    private int count;
     public NumberOrdersCustomer() {
         initComponents();
+    }
+
+    public void getClientsHeredia(String initialDate, String finalDate) throws SQLException, ClassNotFoundException {
+        DefaultTableModel amountsHeredia = (DefaultTableModel) customersTable.getModel();
+        amountsHeredia.setRowCount(0);
+
+        try {
+            resultFromQuery = AddDataProcedures.consultAdministratorQuantityOrdersHerediaDrugStore(initialDate, finalDate);
+            Vector dataOfficeAmountHeredia = new Vector();
+            while (resultFromQuery.next()) {
+                dataOfficeAmountHeredia.add(resultFromQuery.getFloat(1));
+            }
+            amountsHeredia.addRow(dataOfficeAmountHeredia);
+            customersTable.setModel(amountsHeredia);
+        } catch (SQLException e) {
+        }
     }
 
     /**
@@ -256,8 +284,33 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
 
     private void consultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultActionPerformed
         if (initialYear.getText().isEmpty() || initialMonth.getText().isEmpty() || initialDay.getText().isEmpty()
-                || finalYear.getText().isEmpty() || finalMonth.getText().isEmpty() || finalDay.getText().isEmpty())
-               {        // TODO add your handling code here:
+                || finalYear.getText().isEmpty() || finalMonth.getText().isEmpty() || finalDay.getText().isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "Complete all the fields please");
+        }
+        if (LoginProvince.logInProvince == 1) {
+            try {
+                totalAmountOrders.setText(AddDataProcedures.consultAdministratorAmountPerTypeMonthSanJose(selectedMonth, selectedType));
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (LoginProvince.logInProvince == 3) {
+            try {
+                totalAmountOrders.setText(AddDataProcedures.consultAdministratorAmountPerTypeMonthCartago(selectedMonth, selectedType));
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (LoginProvince.logInProvince == 4) {
+            try {
+                totalAmountOrders.setText(AddDataProcedures.consultAdministratorAmountPerTypeMonthHeredia(selectedMonth, selectedType));
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(AmountTypeOrder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+// TODO add your handling code here:
     }//GEN-LAST:event_consultActionPerformed
 
     /**
