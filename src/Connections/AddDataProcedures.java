@@ -129,6 +129,20 @@ public class AddDataProcedures {
         return amount;
     }
     
+    public static ResultSet consultAverageAmountOrdersSanJose(String beginDate, String endDate) throws ClassNotFoundException{
+        ResultSet result = ConnectionSQL.createConsult("exec consultarMontoPedidosPromedioSanJose "+beginDate+","+endDate);
+        return result;
+    }
+    
+    public static ResultSet consultAverageAmountOrdersCartago(String beginDate, String endDate) throws ClassNotFoundException{
+        ResultSet result = ConnectionSQL.createConsult("exec consultarMontoPedidosPromedioCartago "+beginDate+","+endDate);
+        return result;
+    }
+
+    public static ResultSet consultAverageAmountOrdersHeredia(String beginDate, String endDate) throws ClassNotFoundException{
+        ResultSet result = ConnectionSQL.createConsult("exec consultarMontoPedidosPromedioHeredia "+beginDate+","+endDate);
+        return result;
+    }
 //Methods to call procedure associated with Manager consults
     //Procedure one
     public static ResultSet consultAmountOfficeHeredia(String initialDate, String finalDate) 
