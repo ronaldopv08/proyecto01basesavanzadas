@@ -196,7 +196,6 @@ public class AdministratorModule extends javax.swing.JFrame {
             amountCollectedDrugstore.setVisible(true);
             amountCollectedDrugstore.setLocationRelativeTo(null);
             amountCollectedDrugstore.setDefaultCloseOperation(amountCollectedDrugstore.HIDE_ON_CLOSE);
-            this.dispose();
             
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(AdministratorModule.class.getName()).log(Level.SEVERE, null, ex);

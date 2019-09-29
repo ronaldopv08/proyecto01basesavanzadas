@@ -60,7 +60,7 @@ public class AmountCollectedDrugStore extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         collectedAmount = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Total revenue collected from pharmacies");
 
@@ -88,7 +88,7 @@ public class AmountCollectedDrugStore extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(collectedAmount)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();

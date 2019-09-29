@@ -78,9 +78,6 @@ public class RegisterOrder extends javax.swing.JFrame {
         registerOrderMedicines = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        registerOrderPrice = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -90,8 +87,6 @@ public class RegisterOrder extends javax.swing.JFrame {
         jLabel2.setText("Client:");
 
         jLabel5.setText("Type:");
-
-        registerOrderType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         registerOrderMedicines.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -105,10 +100,10 @@ public class RegisterOrder extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, true
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -134,17 +129,6 @@ public class RegisterOrder extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-
-        jLabel7.setText("Price:");
-
-        jButton3.setText("Calculate Price");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        registerOrderPrice.setText("0");
 
         jButton4.setText("Add Medicine to Order");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -179,16 +163,8 @@ public class RegisterOrder extends javax.swing.JFrame {
                             .addComponent(registerOrderIDClient, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(108, 108, 108)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton4)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
-                                .addComponent(registerOrderPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 431, Short.MAX_VALUE)
+                        .addComponent(jButton4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18))))
@@ -208,19 +184,13 @@ public class RegisterOrder extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton4)
-                                .addGap(31, 31, 31)
-                                .addComponent(jButton3)
-                                .addGap(72, 72, 72)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(registerOrderPrice))
-                                .addGap(0, 218, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addComponent(registerOrderType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2)))
                         .addContainerGap())
@@ -326,18 +296,6 @@ public class RegisterOrder extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        int row = registerOrderMedicines.getSelectedRow();
-
-        int price = Integer.parseInt(registerOrderMedicines.getValueAt(row, 3).toString());
-        int amount = Integer.parseInt(registerOrderMedicines.getValueAt(row, 4).toString());
-        registerOrderPrice.setText(Integer.toString(amount*price));
-        
-        
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         EmployeeModule employeeModule = new EmployeeModule();
@@ -393,17 +351,14 @@ public class RegisterOrder extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField registerOrderIDClient;
     private javax.swing.JTable registerOrderMedicines;
-    private javax.swing.JLabel registerOrderPrice;
     private javax.swing.JComboBox<String> registerOrderType;
     // End of variables declaration//GEN-END:variables
 }
