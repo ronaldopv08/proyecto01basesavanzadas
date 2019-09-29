@@ -42,21 +42,27 @@ public class AmountOffice extends javax.swing.JFrame {
             resultFromQuery = AddDataProcedures.consultAmountOfficeHeredia(initialDate, finalDate);
             Vector dataOfficeAmountHeredia = new Vector();
             dataOfficeAmountHeredia.add("Heredia");
-            dataOfficeAmountHeredia.add(resultFromQuery.getInt(1));
+            while(resultFromQuery.next()){
+                dataOfficeAmountHeredia.add(resultFromQuery.getFloat(1));                
+            }
             amountsHeredia.addRow(dataOfficeAmountHeredia);
             amountOfficeTable.setModel(amountsHeredia);
             
             resultFromQuery = AddDataProcedures.consultAmountOfficeCartago(initialDate, finalDate);
             Vector dataOfficeAmountCartago = new Vector();
             dataOfficeAmountCartago.add("Cartago");
-            dataOfficeAmountCartago.add(resultFromQuery.getInt(1));
+            while(resultFromQuery.next()){
+            dataOfficeAmountCartago.add(resultFromQuery.getFloat(1));
+            }
             amountsCartago.addRow(dataOfficeAmountCartago);
             amountOfficeTable.setModel(amountsCartago);
             
             resultFromQuery = AddDataProcedures.consultAmountOfficeSanJose(initialDate, finalDate);
             Vector dataOfficeAmountSanJose = new Vector();
             dataOfficeAmountSanJose.add("San Jose");
-            dataOfficeAmountSanJose.add(resultFromQuery.getInt(1));
+            while(resultFromQuery.next()){
+            dataOfficeAmountSanJose.add(resultFromQuery.getFloat(1));
+            }
             amountsSanJose.addRow(dataOfficeAmountSanJose);
             amountOfficeTable.setModel(amountsSanJose);
         } catch (SQLException e) {
@@ -282,7 +288,7 @@ public class AmountOffice extends javax.swing.JFrame {
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(TopClients.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, "Best 3 clients in the bussiness!");
+                JOptionPane.showMessageDialog(this, "Amount in the specified period!");
             }catch (SQLException e) {
            JOptionPane.showMessageDialog(this, "Data not typed correctly");
         } 
