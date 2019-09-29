@@ -55,11 +55,16 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
         amountsHeredia.setRowCount(0);
 
         try {
-            resultFromQuery = ConnectionSQL.
-       createConsult("select A.idPedido,C.nombre,A.idContacto,A.fecha from pedidosTotalesTodosDatos "
-       + "A join clientesTotalesTodosDatos C on A.idContacto=C.idContacto join farmaciasTotales B "
-       + "on A.cedulaJuridica=B.cedulaJuridica and A.estadoPedido=2 and B.idProvincia=4 and A.fecha between '"+initialDate+"' and '"+finalDate+"';");
-                    
+resultFromQuery = ConnectionSQL.createConsult("select pedidoHeredia.idPedido, "
++ "contactoHeredia.nombre, contactoHeredia.idContacto, "
++ "pedidoHeredia.fecha, SUM(precio*cantidad) as amount  "
++ "from medicamento join medicamentoPedidoHeredia "
++ "on medicamento.idMedicamento=medicamentoPedidoHeredia.idMedicamento "
++ "join pedidoHeredia  on medicamentoPedidoHeredia.idPedido = pedidoHeredia.idPedido "
++ "join contactoHeredia on pedidoHeredia.idContacto = contactoHeredia.idContacto "
++ "where pedidoHeredia.estadoPedido = 2 "
++ "and pedidoHeredia.fecha between '"+initialDate+"' and '"+finalDate+"' group "
++ "by pedidoHeredia.idPedido,contactoHeredia.nombre,contactoHeredia.idContacto, pedidoHeredia.fecha;");
             Vector dataOfficeAmountHeredia = new Vector();
             while (resultFromQuery.next()) {
                 dataOfficeAmountHeredia.add(resultFromQuery.getInt(1));
@@ -96,11 +101,16 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
         amountsCartago.setRowCount(0);
 
         try {
-            resultFromQuery = ConnectionSQL.
-       createConsult("select A.idPedido,C.nombre,A.idContacto,A.fecha from pedidosTotalesTodosDatos "
-       + "A join clientesTotalesTodosDatos C on A.idContacto=C.idContacto join farmaciasTotales B "
-       + "on A.cedulaJuridica=B.cedulaJuridica and A.estadoPedido=2 and B.idProvincia=3 and A.fecha between '"+initialDate+"' and '"+finalDate+"';");
-                    
+resultFromQuery = ConnectionSQL.createConsult("select pedidoCartago.idPedido, "
++ "contactoCartago.nombre, contactoCartago.idContacto, "
++ "pedidoCartago.fecha, SUM(precio*cantidad) as amount  "
++ "from medicamento join medicamentoPedidoCartago "
++ "on medicamento.idMedicamento=medicamentoPedidoCartago.idMedicamento "
++ "join pedidoCartago  on medicamentoPedidoCartago.idPedido = pedidoCartago.idPedido "
++ "join contactoCartago on pedidoCartago.idContacto = contactoCartago.idContacto "
++ "where pedidoCartago.estadoPedido = 2 "
++ "and pedidoCartago.fecha between '"+initialDate+"' and '"+finalDate+"' group "
++ "by pedidoCartago.idPedido,contactoCartago.nombre,contactoCartago.idContacto, pedidoCartago.fecha;");    
             Vector dataOfficeAmountCartago = new Vector();
             while (resultFromQuery.next()) {
                 dataOfficeAmountCartago.add(resultFromQuery.getInt(1));
@@ -137,11 +147,20 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
         amountsSanJose.setRowCount(0);
 
         try {
-            resultFromQuery = ConnectionSQL.
-       createConsult("select A.idPedido,C.nombre,A.idContacto,A.fecha from pedidosTotalesTodosDatos "
-       + "A join clientesTotalesTodosDatos C on A.idContacto=C.idContacto join farmaciasTotales B "
-       + "on A.cedulaJuridica=B.cedulaJuridica and A.estadoPedido=2 and B.idProvincia=1 and A.fecha between '"+initialDate+"' and '"+finalDate+"';");
-                    
+            
+              
+resultFromQuery = ConnectionSQL.createConsult("select pedidoSanJose.idPedido, "
++ "contactoSanJose.nombre, contactoSanJose.idContacto, "
++ "pedidoSanJose.fecha, SUM(precio*cantidad) as amount  "
++ "from medicamento join medicamentoPedidoSanJose "
++ "on medicamento.idMedicamento=medicamentoPedidoSanJose.idMedicamento "
++ "join pedidoSanJose  on medicamentoPedidoSanJose.idPedido = pedidoSanJose.idPedido "
++ "join contactoSanJose on pedidoSanJose.idContacto = contactoSanJose.idContacto "
++ "where pedidoSanJose.estadoPedido = 2 "
++ "and pedidoSanJose.fecha between '"+initialDate+"' and '"+finalDate+"' group "
++ "by pedidoSanJose.idPedido,contactoSanJose.nombre,contactoSanJose.idContacto, pedidoSanJose.fecha;");
+            
+            
             Vector dataOfficeAmountSanJose = new Vector();
             while (resultFromQuery.next()) {
                 dataOfficeAmountSanJose.add(resultFromQuery.getInt(1));
@@ -233,17 +252,17 @@ public class NumberOrdersCustomer extends javax.swing.JFrame {
 
         ordersTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Order Number", "Client", "Client ID", "Date"
+                "Order Number", "Client", "Client ID", "Date", "Amount"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true
+                false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
