@@ -68,15 +68,23 @@ public class AddDataProcedures {
     
     //Methods to call procedure associated with administrator consults
     //Procedure one
-    public static void consultAmountCartagoDrugStore() throws SQLException, ClassNotFoundException {
-        CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaAdministradorMontoSucursalCartago()}");
-        entry.execute();    
+    public static double consultAmountSanJoseDrugStore() throws SQLException, ClassNotFoundException {
+        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorMontoSucursalSanJose;");
+        result.next();
+        double amount = result.getDouble(1);
+        return amount;
     }
-    public static void consultAmountSanJoseDrugStore() throws SQLException, ClassNotFoundException {
-        CallableStatement entry = 
-       ConnectionSQL.getConnectionSQL().prepareCall("{call consultaAdministradorMontoSucursalSanJose()}");
-        entry.execute();    
+    public static double consultAmountCartagoDrugStore() throws SQLException, ClassNotFoundException {
+        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorMontoSucursalCartago;");
+        result.next();
+        double amount = result.getDouble(1);
+        return amount;
+    }
+    public static double consultAmountHerediaDrugStore() throws SQLException, ClassNotFoundException {
+        ResultSet result = ConnectionSQL.createConsult("exec consultaAdministradorMontoSucursalHeredia;");
+        result.next();
+        double amount = result.getDouble(1);
+        return amount;
     }
     
     //Procedure two
