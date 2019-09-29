@@ -197,17 +197,11 @@
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="BeginDateChoosed">
           <Properties>
-            <Property name="date" type="java.util.Date" editor="org.netbeans.beaninfo.editors.DateEditor">
-              <SerializedValue value="-84,-19,0,5,115,114,0,14,106,97,118,97,46,117,116,105,108,46,68,97,116,101,104,106,-127,1,75,89,116,25,3,0,0,120,112,119,8,0,0,1,109,122,-2,68,56,120"/>
-            </Property>
             <Property name="dateFormatString" type="java.lang.String" value="yyyy-mm-dd"/>
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="EndDateChoosed">
           <Properties>
-            <Property name="date" type="java.util.Date" editor="org.netbeans.beaninfo.editors.DateEditor">
-              <SerializedValue value="-84,-19,0,5,115,114,0,14,106,97,118,97,46,117,116,105,108,46,68,97,116,101,104,106,-127,1,75,89,116,25,3,0,0,120,112,119,8,0,0,1,109,122,-2,95,-112,120"/>
-            </Property>
             <Property name="dateFormatString" type="java.lang.String" value="yyyy-mm-dd"/>
           </Properties>
         </Component>

@@ -233,8 +233,10 @@ public class AverageAmountCustomer extends javax.swing.JFrame {
         if (endDate < beginDate){
             JOptionPane.showMessageDialog(this, "Please use valid date range.");
         }
-        String beginDateFormat = BeginDateChoosed.getDateFormatString();
+        String beginDateFormat = BeginDateChoosed.getDate().toString();
         String endDateFormart = EndDateChoosed.getDateFormatString();
+        System.out.println(endDateFormart);
+        System.out.println(beginDateFormat);
         
         if (LoginProvince.logInProvince==1){
             try {
