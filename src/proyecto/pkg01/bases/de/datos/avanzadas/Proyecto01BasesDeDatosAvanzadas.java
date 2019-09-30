@@ -5,6 +5,9 @@
  */
 package proyecto.pkg01.bases.de.datos.avanzadas;
 
+
+import GUI.signIn;
+
 /**
  *
  * @author 
@@ -15,7 +18,8 @@ public class Proyecto01BasesDeDatosAvanzadas {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        signIn newSession = new signIn();
+        newSession.setVisible(true);
     }
     
 }
